@@ -1,14 +1,14 @@
 body {
-    background-color: darkgray;
+  background-color: darkgray;
 }
 
-.cells{
-    border-style: solid;
-    border-width: 1px;  
-    min-width: 150px; 
+.cells {
+  border-style: solid;
+  border-width: 1px;
+  min-width: 150px;
 }
 
 .table {
-    border-style: solid;
-    border-width: 1px;
+  border-style: solid;
+  border-width: 1px;
 }
