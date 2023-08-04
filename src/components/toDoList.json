@@ -1,0 +1,24 @@
+[
+    {
+    "description": "create to do app",
+    "dateAdded": "04/08/2023",
+    "dueDate": "05/08/2023",
+    "status": "in progress",
+    "id":1
+     },
+     {
+    "description": "go running",
+    "dateAdded": "04/08/2023",
+    "dueDate": "05/08/2023",
+    "status": "in progress",
+    "id": 2
+        },
+    {
+    "description": "go shopping",
+    "dateAdded": "04/08/2023",
+    "dueDate": "05/08/2023",
+    "status": "in progress",
+    "id":3
+        }
+]
+
