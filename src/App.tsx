@@ -1,5 +1,6 @@
 import { oneTask,OneTaskElement  } from "./components/oneTask";
 import todolist from "./components/toDoList.json"
+import "./App.css"
 
 
 
@@ -10,29 +11,32 @@ const listOfTasks: oneTask[] = todolist;
 return (
   <>
   <h1>Create new task</h1>
-  <p>Description: </p>
-  <p>Due date: </p>
+  <form>
+  <label>Description: 
+    <input type="text" name="task"/><br/>
+  </label>
+  <label>Due date: 
+    <input type="text" name="date"/>
+  </label>
+  <input type="submit" value="Submit"/>
+  </form>
     <h1>To do list</h1>
-    <div className="header">
-      <span>DESCRIPTION </span>
-      <span>DATE ADDED </span>
-      <span>DUE DATE </span>
-      <span>STATUS </span>
-    </div>
-    <main>
+    
+   
       
-        
+     <table className="table">
       {listOfTasks.map((task) => {
         return(
-      <OneTaskElement
-        description = {task.description}
-        dateAdded = {task.dateAdded}
-        dueDate={task.dueDate}
-        status={task.status}
-        key={task.id}
-      />)})}
+          <OneTaskElement
+          description = {task.description}
+          dateAdded = {task.dateAdded}
+          dueDate={task.dueDate}
+          status={task.status}
+          key={task.id}
+          />)})}
+    </table>   
      
-    </main>
+    
     
   </>
 )
