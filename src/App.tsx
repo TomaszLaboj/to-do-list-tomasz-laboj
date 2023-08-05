@@ -50,8 +50,6 @@ function App(): JSX.Element {
       <br />
       <button onClick={handleAddTask}>Add task</button>
       <h1>To do list</h1>
-      <h1>{addDescription}</h1>
-      <h1>{addDate}</h1>
       <table className="table">
         {listOfTasks.map((task) => {
           return (
