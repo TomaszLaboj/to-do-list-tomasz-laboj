@@ -8,13 +8,15 @@ export interface oneTask {
 export function OneTaskElement(props: oneTask): JSX.Element {
   return (
     <>
-      <tr>
-        <td className="cells">{props.description}</td>
-        <td className="cells">{props.dateAdded}</td>
-        <td className="cells">{props.dueDate}</td>
-        <td className="cells">{props.status}</td>
-        {props.id}
-      </tr>
+      <tbody>
+        <tr>
+          <td className="cells">{props.description}</td>
+          <td className="cells">{props.dateAdded}</td>
+          <td className="cells">{props.dueDate}</td>
+          <td className="cells">{props.status}</td>
+          {props.id}
+        </tr>
+      </tbody>
     </>
   );
 }
