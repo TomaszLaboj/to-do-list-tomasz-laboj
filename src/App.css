@@ -2,7 +2,12 @@ body {
   background-color: darkgray;
 }
 
+.instructions {
+  font-size: 12px;
+}
+
 .cells {
+  background-color: azure;
   border-style: solid;
   border-width: 1px;
   min-width: 150px;
@@ -11,4 +16,13 @@ body {
 .table {
   border-style: solid;
   border-width: 1px;
+}
+
+.checkbox {
+  font-size: 10px;
+}
+
+.button {
+  margin-left: 20px;
+  font-size: 10px;
 }
