@@ -14,7 +14,7 @@ function App(): JSX.Element {
   useEffect(() => {
     function getListOfTasks() {
       axios
-        .get("http://localhost:4000/items")
+        .get("https://to-do-back-end-app.onrender.com/items/")
         .then((response) => response.data)
         .then((response) => setListOfTasks(response));
     }
@@ -34,7 +34,7 @@ function App(): JSX.Element {
       status: "In progress",
     };
     axios
-      .post("http://localhost:4000/items", itemToPost)
+      .post("https://to-do-back-end-app.onrender.com/items/", itemToPost)
 
       .then((response) => setResponseStatus(response.status))
       .then(() => setAddDate(today))
@@ -42,28 +42,34 @@ function App(): JSX.Element {
   };
   const handleDeleteTask = (taskId: number | undefined) => {
     axios
-      .delete(`http://localhost:4000/items/${taskId}`)
+      .delete(`https://to-do-back-end-app.onrender.com/items/${taskId}`)
       .then((response) => setResponseStatus(response.status));
   };
   const handleMarkAsDone = (taskToUpdate: oneTask) => {
     axios
-      .patch(`http://localhost:4000/items/${taskToUpdate.id}`, {
-        description: taskToUpdate.description,
-        dateAdded: taskToUpdate.dateAdded,
-        dueDate: taskToUpdate.dueDate,
-        status: "Done",
-      })
+      .patch(
+        `https://to-do-back-end-app.onrender.com/items/${taskToUpdate.id}`,
+        {
+          description: taskToUpdate.description,
+          dateAdded: taskToUpdate.dateAdded,
+          dueDate: taskToUpdate.dueDate,
+          status: "Done",
+        }
+      )
       .then((response) => setResponseStatus(response.status))
       .catch((error) => setResponseStatus(error));
   };
   const handleUpdateTask = (taskToUpdate: oneTask) => {
     axios
-      .patch(`http://localhost:4000/items/${taskToUpdate.id}`, {
-        description: addDescription,
-        dateAdded: taskToUpdate.dateAdded,
-        dueDate: addDate,
-        status: taskToUpdate.status,
-      })
+      .patch(
+        `https://to-do-back-end-app.onrender.com/items/${taskToUpdate.id}`,
+        {
+          description: addDescription,
+          dateAdded: taskToUpdate.dateAdded,
+          dueDate: addDate,
+          status: taskToUpdate.status,
+        }
+      )
       .then((response) => setResponseStatus(response.status))
       .catch((error) => setResponseStatus(error));
   };
