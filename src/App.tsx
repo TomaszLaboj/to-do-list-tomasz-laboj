@@ -16,7 +16,7 @@ function App(): JSX.Element {
       axios
         .get("https://to-do-back-end-app.onrender.com/items/")
         .then((response) => response.data)
-        .then((response) => setListOfTasks(response));
+        .then((response) => setListOfTasks([...response]));
     }
     getListOfTasks();
   }, [responseStatus]);
@@ -40,36 +40,30 @@ function App(): JSX.Element {
       .then(() => setAddDate(today))
       .then(() => setAddDescription(""));
   };
-  const handleDeleteTask = (taskId: number | undefined) => {
+  const handleDeleteTask = (task: oneTask) => {
     axios
-      .delete(`https://to-do-back-end-app.onrender.com/items/${taskId}`)
+      .delete(`https://to-do-back-end-app.onrender.com/items/${task.id}`)
       .then((response) => setResponseStatus(response.status));
   };
   const handleMarkAsDone = (taskToUpdate: oneTask) => {
     axios
-      .patch(
-        `https://to-do-back-end-app.onrender.com/items/${taskToUpdate.id}`,
-        {
-          description: taskToUpdate.description,
-          dateAdded: taskToUpdate.dateAdded,
-          dueDate: taskToUpdate.dueDate,
-          status: "Done",
-        }
-      )
+      .put(`https://to-do-back-end-app.onrender.com/items/${taskToUpdate.id}`, {
+        description: taskToUpdate.description,
+        dateAdded: taskToUpdate.dateAdded,
+        dueDate: taskToUpdate.dueDate,
+        status: "Done",
+      })
       .then((response) => setResponseStatus(response.status))
       .catch((error) => setResponseStatus(error));
   };
   const handleUpdateTask = (taskToUpdate: oneTask) => {
     axios
-      .patch(
-        `https://to-do-back-end-app.onrender.com/items/${taskToUpdate.id}`,
-        {
-          description: addDescription,
-          dateAdded: taskToUpdate.dateAdded,
-          dueDate: addDate,
-          status: taskToUpdate.status,
-        }
-      )
+      .put(`https://to-do-back-end-app.onrender.com/items/${taskToUpdate.id}`, {
+        description: addDescription,
+        dateAdded: taskToUpdate.dateAdded,
+        dueDate: addDate,
+        status: taskToUpdate.status,
+      })
       .then((response) => setResponseStatus(response.status))
       .catch((error) => setResponseStatus(error));
   };
@@ -110,16 +104,13 @@ function App(): JSX.Element {
       <p>{addDescription}</p>
       <p>{addDate}</p>
       <p>Status:{responseStatus}</p>
-      <table className="table">
+      <div className="table">
         {listOfTasksInProgress.map((task) => {
           return (
-            <>
+            <div key={task.id}>
               <input type="checkbox" onChange={() => handleMarkAsDone(task)} />
               <span className="checkbox">Mark as done</span>
-              <button
-                className="button"
-                onClick={() => handleDeleteTask(task.id)}
-              >
+              <button className="button" onClick={() => handleDeleteTask(task)}>
                 Delete task
               </button>
               <button className="button" onClick={() => handleUpdateTask(task)}>
@@ -130,21 +121,17 @@ function App(): JSX.Element {
                 dateAdded={task.dateAdded}
                 dueDate={task.dueDate}
                 status={task.status}
-                key={task.id}
               />
-            </>
+            </div>
           );
         })}
-      </table>
+      </div>
       <h1>Tasks marked as "Done"</h1>
-      <table className="table">
+      <div className="table">
         {listOfTasksMarkedAsDone.map((task) => {
           return (
-            <>
-              <button
-                className="button"
-                onClick={() => handleDeleteTask(task.id)}
-              >
+            <div key={task.id}>
+              <button className="button" onClick={() => handleDeleteTask(task)}>
                 Delete task
               </button>
 
@@ -153,12 +140,11 @@ function App(): JSX.Element {
                 dateAdded={task.dateAdded}
                 dueDate={task.dueDate}
                 status={task.status}
-                key={task.id}
               />
-            </>
+            </div>
           );
         })}
-      </table>
+      </div>
     </>
   );
 }
