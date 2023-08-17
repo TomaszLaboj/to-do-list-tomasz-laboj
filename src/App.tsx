@@ -47,29 +47,23 @@ function App(): JSX.Element {
   };
   const handleMarkAsDone = (taskToUpdate: oneTask) => {
     axios
-      .patch(
-        `https://to-do-back-end-app.onrender.com/items/${taskToUpdate.id}`,
-        {
-          description: taskToUpdate.description,
-          dateAdded: taskToUpdate.dateAdded,
-          dueDate: taskToUpdate.dueDate,
-          status: "Done",
-        }
-      )
+      .put(`https://to-do-back-end-app.onrender.com/items/${taskToUpdate.id}`, {
+        description: taskToUpdate.description,
+        dateAdded: taskToUpdate.dateAdded,
+        dueDate: taskToUpdate.dueDate,
+        status: "Done",
+      })
       .then((response) => setResponseStatus(response.status))
       .catch((error) => setResponseStatus(error));
   };
   const handleUpdateTask = (taskToUpdate: oneTask) => {
     axios
-      .patch(
-        `https://to-do-back-end-app.onrender.com/items/${taskToUpdate.id}`,
-        {
-          description: addDescription,
-          dateAdded: taskToUpdate.dateAdded,
-          dueDate: addDate,
-          status: taskToUpdate.status,
-        }
-      )
+      .put(`https://to-do-back-end-app.onrender.com/items/${taskToUpdate.id}`, {
+        description: addDescription,
+        dateAdded: taskToUpdate.dateAdded,
+        dueDate: addDate,
+        status: taskToUpdate.status,
+      })
       .then((response) => setResponseStatus(response.status))
       .catch((error) => setResponseStatus(error));
   };
