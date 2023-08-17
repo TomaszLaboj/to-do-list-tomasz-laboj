@@ -14,9 +14,9 @@ function App(): JSX.Element {
   useEffect(() => {
     function getListOfTasks() {
       axios
-        .get("https://to-do-back-end-app.onrender.com/items/")
+        .get("https://to-do-back-end-app.onrender.com/todos/")
         .then((response) => response.data)
-        .then((response) => setListOfTasks(response));
+        .then((response) => setListOfTasks([...response]));
     }
     getListOfTasks();
   }, [responseStatus]);
@@ -34,20 +34,22 @@ function App(): JSX.Element {
       status: "In progress",
     };
     axios
-      .post("https://to-do-back-end-app.onrender.com/items/", itemToPost)
+      .post("https://to-do-back-end-app.onrender.com/todos/", itemToPost)
 
       .then((response) => setResponseStatus(response.status))
       .then(() => setAddDate(today))
       .then(() => setAddDescription(""));
   };
-  const handleDeleteTask = (taskId: number | undefined) => {
+  const handleDeleteTask = (task: oneTask) => {
     axios
-      .delete(`https://to-do-back-end-app.onrender.com/items/${taskId}`)
+      .delete(`https://to-do-back-end-app.onrender.com/todos/${task.id}`)
       .then((response) => setResponseStatus(response.status));
   };
   const handleMarkAsDone = (taskToUpdate: oneTask) => {
     axios
-      .put(`https://to-do-back-end-app.onrender.com/items/${taskToUpdate.id}`, {
+
+      .put(`https://to-do-back-end-app.onrender.com/todos/${taskToUpdate.id}`, {
+
         description: taskToUpdate.description,
         dateAdded: taskToUpdate.dateAdded,
         dueDate: taskToUpdate.dueDate,
@@ -58,7 +60,9 @@ function App(): JSX.Element {
   };
   const handleUpdateTask = (taskToUpdate: oneTask) => {
     axios
-      .put(`https://to-do-back-end-app.onrender.com/items/${taskToUpdate.id}`, {
+
+      .put(`https://to-do-back-end-app.onrender.com/todos/${taskToUpdate.id}`, {
+
         description: addDescription,
         dateAdded: taskToUpdate.dateAdded,
         dueDate: addDate,
@@ -104,16 +108,13 @@ function App(): JSX.Element {
       <p>{addDescription}</p>
       <p>{addDate}</p>
       <p>Status:{responseStatus}</p>
-      <table className="table">
+      <div className="table">
         {listOfTasksInProgress.map((task) => {
           return (
-            <>
+            <div key={task.id}>
               <input type="checkbox" onChange={() => handleMarkAsDone(task)} />
               <span className="checkbox">Mark as done</span>
-              <button
-                className="button"
-                onClick={() => handleDeleteTask(task.id)}
-              >
+              <button className="button" onClick={() => handleDeleteTask(task)}>
                 Delete task
               </button>
               <button className="button" onClick={() => handleUpdateTask(task)}>
@@ -124,21 +125,17 @@ function App(): JSX.Element {
                 dateAdded={task.dateAdded}
                 dueDate={task.dueDate}
                 status={task.status}
-                key={task.id}
               />
-            </>
+            </div>
           );
         })}
-      </table>
+      </div>
       <h1>Tasks marked as "Done"</h1>
-      <table className="table">
+      <div className="table">
         {listOfTasksMarkedAsDone.map((task) => {
           return (
-            <>
-              <button
-                className="button"
-                onClick={() => handleDeleteTask(task.id)}
-              >
+            <div key={task.id}>
+              <button className="button" onClick={() => handleDeleteTask(task)}>
                 Delete task
               </button>
 
@@ -147,12 +144,11 @@ function App(): JSX.Element {
                 dateAdded={task.dateAdded}
                 dueDate={task.dueDate}
                 status={task.status}
-                key={task.id}
               />
-            </>
+            </div>
           );
         })}
-      </table>
+      </div>
     </>
   );
 }

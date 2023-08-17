@@ -3,20 +3,20 @@ export interface oneTask {
   dateAdded: string;
   dueDate: string;
   status: string;
-  id?: number;
+  id?: number | undefined;
 }
 export function OneTaskElement(props: oneTask): JSX.Element {
   return (
     <>
-      <tbody>
-        <tr>
-          <td className="cells">{props.description}</td>
-          <td className="cells">{props.dateAdded}</td>
-          <td className="cells">{props.dueDate}</td>
-          <td className="cells">{props.status}</td>
-          {props.id}
-        </tr>
-      </tbody>
+      <div>
+        <p>
+          <span className="cells">{props.description}</span>
+          <span className="cells">{props.dateAdded}</span>
+          <span className="cells">{props.dueDate}</span>
+          <span className="cells">{props.status}</span>
+          <span className="cells">{props.id}</span>
+        </p>
+      </div>
     </>
   );
 }
