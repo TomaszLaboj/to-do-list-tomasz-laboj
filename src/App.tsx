@@ -14,7 +14,7 @@ function App(): JSX.Element {
   useEffect(() => {
     function getListOfTasks() {
       axios
-        .get("https://to-do-back-end-app.onrender.com/items/")
+        .get("https://to-do-back-end-app.onrender.com/todos/")
         .then((response) => response.data)
         .then((response) => setListOfTasks([...response]));
     }
@@ -34,7 +34,7 @@ function App(): JSX.Element {
       status: "In progress",
     };
     axios
-      .post("https://to-do-back-end-app.onrender.com/items/", itemToPost)
+      .post("https://to-do-back-end-app.onrender.com/todos/", itemToPost)
 
       .then((response) => setResponseStatus(response.status))
       .then(() => setAddDate(today))
@@ -42,12 +42,12 @@ function App(): JSX.Element {
   };
   const handleDeleteTask = (task: oneTask) => {
     axios
-      .delete(`https://to-do-back-end-app.onrender.com/items/${task.id}`)
+      .delete(`https://to-do-back-end-app.onrender.com/todos/${task.id}`)
       .then((response) => setResponseStatus(response.status));
   };
   const handleMarkAsDone = (taskToUpdate: oneTask) => {
     axios
-      .put(`https://to-do-back-end-app.onrender.com/items/${taskToUpdate.id}`, {
+      .put(`https://to-do-back-end-app.onrender.com/todos/${taskToUpdate.id}`, {
         description: taskToUpdate.description,
         dateAdded: taskToUpdate.dateAdded,
         dueDate: taskToUpdate.dueDate,
@@ -58,7 +58,7 @@ function App(): JSX.Element {
   };
   const handleUpdateTask = (taskToUpdate: oneTask) => {
     axios
-      .put(`https://to-do-back-end-app.onrender.com/items/${taskToUpdate.id}`, {
+      .put(`https://to-do-back-end-app.onrender.com/todos/${taskToUpdate.id}`, {
         description: addDescription,
         dateAdded: taskToUpdate.dateAdded,
         dueDate: addDate,
