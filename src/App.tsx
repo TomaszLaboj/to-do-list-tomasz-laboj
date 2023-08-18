@@ -48,7 +48,6 @@ function App(): JSX.Element {
     axios
 
       .put(`https://to-do-back-end-app.onrender.com/todos/${taskToUpdate.id}`, {
-
         description: taskToUpdate.description,
         date_added: taskToUpdate.date_added,
         due_date: taskToUpdate.due_date,
@@ -61,7 +60,6 @@ function App(): JSX.Element {
     axios
 
       .put(`https://to-do-back-end-app.onrender.com/todos/${taskToUpdate.id}`, {
-
         description: addDescription,
         date_added: taskToUpdate.date_added,
         due_date: addDate,
