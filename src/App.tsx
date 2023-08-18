@@ -10,18 +10,17 @@ import axios from "axios";
 function App(): JSX.Element {
   const today = new Date().toISOString().substring(0, 10);
   const [responseStatus, setResponseStatus] = useState<number>();
+  const [listOfTasks, setListOfTasks] = useState<oneTask[]>([]);
 
   useEffect(() => {
     function getListOfTasks() {
       axios
         .get("https://to-do-back-end-app.onrender.com/todos/")
-        .then((response) => response.data)
-        .then((response) => setListOfTasks([...response]));
+        .then((response) => setListOfTasks(response.data));
     }
     getListOfTasks();
   }, [responseStatus]);
-
-  const [listOfTasks, setListOfTasks] = useState<oneTask[]>([]);
+  console.log("logging list of tasks", listOfTasks);
   const [addDescription, setAddDescription] = useState<string>("");
   const [addDate, setAddDate] = useState<string>(today);
   const listOfTasksInProgress: oneTask[] = filterTasksAsInprogress(listOfTasks);
@@ -29,8 +28,8 @@ function App(): JSX.Element {
   const handleAddTask = () => {
     const itemToPost: oneTask = {
       description: addDescription,
-      dateAdded: today,
-      dueDate: addDate,
+      date_added: today,
+      due_date: addDate,
       status: "In progress",
     };
     axios
@@ -49,10 +48,9 @@ function App(): JSX.Element {
     axios
 
       .put(`https://to-do-back-end-app.onrender.com/todos/${taskToUpdate.id}`, {
-
         description: taskToUpdate.description,
-        dateAdded: taskToUpdate.dateAdded,
-        dueDate: taskToUpdate.dueDate,
+        date_added: taskToUpdate.date_added,
+        due_date: taskToUpdate.due_date,
         status: "Done",
       })
       .then((response) => setResponseStatus(response.status))
@@ -62,10 +60,9 @@ function App(): JSX.Element {
     axios
 
       .put(`https://to-do-back-end-app.onrender.com/todos/${taskToUpdate.id}`, {
-
         description: addDescription,
-        dateAdded: taskToUpdate.dateAdded,
-        dueDate: addDate,
+        date_added: taskToUpdate.date_added,
+        due_date: addDate,
         status: taskToUpdate.status,
       })
       .then((response) => setResponseStatus(response.status))
@@ -122,8 +119,8 @@ function App(): JSX.Element {
               </button>
               <OneTaskElement
                 description={task.description}
-                dateAdded={task.dateAdded}
-                dueDate={task.dueDate}
+                date_added={task.date_added}
+                due_date={task.due_date}
                 status={task.status}
               />
             </div>
@@ -141,8 +138,8 @@ function App(): JSX.Element {
 
               <OneTaskElement
                 description={task.description}
-                dateAdded={task.dateAdded}
-                dueDate={task.dueDate}
+                date_added={task.date_added}
+                due_date={task.due_date}
                 status={task.status}
               />
             </div>
