@@ -19,12 +19,22 @@ function App(): JSX.Element {
         .then((response) => setListOfTasks(response.data));
     }
     getListOfTasks();
-  }, [responseStatus]);
+  }, []);
+
   console.log("logging list of tasks", listOfTasks);
+
   const [addDescription, setAddDescription] = useState<string>("");
   const [addDate, setAddDate] = useState<string>(today);
+
   const listOfTasksInProgress: oneTask[] = filterTasksAsInprogress(listOfTasks);
   const listOfTasksMarkedAsDone: oneTask[] = filterTasksAsDone(listOfTasks);
+
+  const getTasksList = () => {
+    axios
+      .get("https://to-do-back-end-app.onrender.com/todos/")
+      .then((response) => setListOfTasks(response.data));
+  }
+
   const handleAddTask = () => {
     const itemToPost: oneTask = {
       description: addDescription,
@@ -37,13 +47,17 @@ function App(): JSX.Element {
 
       .then((response) => setResponseStatus(response.status))
       .then(() => setAddDate(today))
-      .then(() => setAddDescription(""));
+      .then(() => setAddDescription(""))
+      .then(() => getTasksList())
   };
+
   const handleDeleteTask = (task: oneTask) => {
     axios
       .delete(`https://to-do-back-end-app.onrender.com/todos/${task.id}`)
-      .then((response) => setResponseStatus(response.status));
+      .then((response) => setResponseStatus(response.status))
+      .then(() => getTasksList());
   };
+
   const handleMarkAsDone = (taskToUpdate: oneTask) => {
     axios
 
@@ -54,8 +68,10 @@ function App(): JSX.Element {
         status: "Done",
       })
       .then((response) => setResponseStatus(response.status))
+      .then(() => getTasksList())
       .catch((error) => setResponseStatus(error));
   };
+
   const handleUpdateTask = (taskToUpdate: oneTask) => {
     axios
 
@@ -66,6 +82,7 @@ function App(): JSX.Element {
         status: taskToUpdate.status,
       })
       .then((response) => setResponseStatus(response.status))
+      .then(() => getTasksList())
       .catch((error) => setResponseStatus(error));
   };
   return (
