@@ -74,6 +74,7 @@ function App(): JSX.Element {
         due_date: addDate,
         status: taskToUpdate.status,
       })
+      .then(() => setAddDescription(""))
       .then(() => getTasksList());
   };
 
@@ -94,6 +95,7 @@ function App(): JSX.Element {
         <div>
           <p>Task description: </p>
           <input
+            value={addDescription}
             className="inputbox"
             type="text"
             id="description"
