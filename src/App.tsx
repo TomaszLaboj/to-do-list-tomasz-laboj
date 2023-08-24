@@ -20,7 +20,6 @@ function App(): JSX.Element {
     getListOfTasks();
   }, []);
 
-
   const [addDescription, setAddDescription] = useState<string>("");
   const [addDate, setAddDate] = useState<string>(today);
 
@@ -31,9 +30,7 @@ function App(): JSX.Element {
     axios
       .get("https://to-do-back-end-app.onrender.com/todos/")
       .then((response) => setListOfTasks(response.data));
-
   };
-
 
   const handleAddTask = () => {
     const itemToPost: oneTask = {
@@ -121,6 +118,7 @@ function App(): JSX.Element {
 
       <br />
       <button onClick={handleAddTask}>Add task</button>
+
       <h2>To do list</h2>
 
       <div className="table">
