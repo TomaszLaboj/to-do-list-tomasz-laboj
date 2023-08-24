@@ -9,7 +9,6 @@ import axios from "axios";
 
 function App(): JSX.Element {
   const today = new Date().toISOString().substring(0, 10);
-  const [responseStatus, setResponseStatus] = useState<number>();
   const [listOfTasks, setListOfTasks] = useState<oneTask[]>([]);
 
   useEffect(() => {
@@ -21,7 +20,6 @@ function App(): JSX.Element {
     getListOfTasks();
   }, []);
 
-  console.log("logging list of tasks", listOfTasks);
 
   const [addDescription, setAddDescription] = useState<string>("");
   const [addDate, setAddDate] = useState<string>(today);
@@ -33,7 +31,9 @@ function App(): JSX.Element {
     axios
       .get("https://to-do-back-end-app.onrender.com/todos/")
       .then((response) => setListOfTasks(response.data));
-  }
+
+  };
+
 
   const handleAddTask = () => {
     const itemToPost: oneTask = {
@@ -45,16 +45,14 @@ function App(): JSX.Element {
     axios
       .post("https://to-do-back-end-app.onrender.com/todos/", itemToPost)
 
-      .then((response) => setResponseStatus(response.status))
       .then(() => setAddDate(today))
       .then(() => setAddDescription(""))
-      .then(() => getTasksList())
+      .then(() => getTasksList());
   };
 
   const handleDeleteTask = (task: oneTask) => {
     axios
       .delete(`https://to-do-back-end-app.onrender.com/todos/${task.id}`)
-      .then((response) => setResponseStatus(response.status))
       .then(() => getTasksList());
   };
 
@@ -67,9 +65,7 @@ function App(): JSX.Element {
         due_date: taskToUpdate.due_date,
         status: "Done",
       })
-      .then((response) => setResponseStatus(response.status))
-      .then(() => getTasksList())
-      .catch((error) => setResponseStatus(error));
+      .then(() => getTasksList());
   };
 
   const handleUpdateTask = (taskToUpdate: oneTask) => {
@@ -81,10 +77,9 @@ function App(): JSX.Element {
         due_date: addDate,
         status: taskToUpdate.status,
       })
-      .then((response) => setResponseStatus(response.status))
-      .then(() => getTasksList())
-      .catch((error) => setResponseStatus(error));
+      .then(() => getTasksList());
   };
+
   return (
     <>
       <h1>Create a new task</h1>
@@ -97,31 +92,37 @@ function App(): JSX.Element {
         To update task form the "To do" list provide description and choose a
         new date and then click "Update task" on the task you want to update.
       </p>
-      <p>Task description: </p>{" "}
-      <input
-        type="text"
-        id="description"
-        name="description"
-        onChange={(event) => {
-          setAddDescription(event.target.value);
-        }}
-      />
-      <br />
-      <p>Due Date: </p>
-      <input
-        type="date"
-        value={addDate}
-        placeholder="dd/mm/yyyy"
-        onChange={(event) => {
-          setAddDate(event.target.value);
-        }}
-      />
+
+      <div className="input">
+        <div>
+          <p>Task description: </p>
+          <input
+            className="inputbox"
+            type="text"
+            id="description"
+            name="description"
+            onChange={(event) => {
+              setAddDescription(event.target.value);
+            }}
+          />
+        </div>
+        <div>
+          <p>Due Date: </p>
+          <input
+            type="date"
+            value={addDate}
+            placeholder="dd/mm/yyyy"
+            onChange={(event) => {
+              setAddDate(event.target.value);
+            }}
+          />
+        </div>
+      </div>
+
       <br />
       <button onClick={handleAddTask}>Add task</button>
-      <h1>To do list</h1>
-      <p>{addDescription}</p>
-      <p>{addDate}</p>
-      <p>Status:{responseStatus}</p>
+      <h2>To do list</h2>
+
       <div className="table">
         {listOfTasksInProgress.map((task) => {
           return (
@@ -144,7 +145,7 @@ function App(): JSX.Element {
           );
         })}
       </div>
-      <h1>Tasks marked as "Done"</h1>
+      <h2>Tasks marked as "Done"</h2>
       <div className="table">
         {listOfTasksMarkedAsDone.map((task) => {
           return (
