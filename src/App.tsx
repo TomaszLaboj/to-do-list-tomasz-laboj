@@ -9,7 +9,6 @@ import axios from "axios";
 
 function App(): JSX.Element {
   const today = new Date().toISOString().substring(0, 10);
-  const [responseStatus, setResponseStatus] = useState<number>();
   const [listOfTasks, setListOfTasks] = useState<oneTask[]>([]);
 
   useEffect(() => {
@@ -42,17 +41,15 @@ function App(): JSX.Element {
     axios
       .post("https://to-do-back-end-app.onrender.com/todos/", itemToPost)
 
-      .then((response) => setResponseStatus(response.status))
       .then(() => setAddDate(today))
       .then(() => setAddDescription(""))
-      .then(() => getTasksList)
+      .then(() => getTasksList())
   };
 
   const handleDeleteTask = (task: oneTask) => {
     axios
       .delete(`https://to-do-back-end-app.onrender.com/todos/${task.id}`)
-      .then((response) => setResponseStatus(response.status))
-      .then(() => getTasksList)
+      .then(() => getTasksList())
   };
 
   const handleMarkAsDone = (taskToUpdate: oneTask) => {
@@ -64,9 +61,7 @@ function App(): JSX.Element {
         due_date: taskToUpdate.due_date,
         status: "Done",
       })
-      .then((response) => setResponseStatus(response.status))
-      .catch((error) => setResponseStatus(error))
-      .then(() => getTasksList)
+      .then(() => getTasksList())
   };
 
   const handleUpdateTask = (taskToUpdate: oneTask) => {
@@ -78,9 +73,7 @@ function App(): JSX.Element {
         due_date: addDate,
         status: taskToUpdate.status,
       })
-      .then((response) => setResponseStatus(response.status))
-      .catch((error) => setResponseStatus(error))
-      .then(() => getTasksList)
+      .then(() => getTasksList())
   };
   
   return (
