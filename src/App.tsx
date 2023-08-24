@@ -19,12 +19,13 @@ function App(): JSX.Element {
         .then((response) => setListOfTasks(response.data));
     }
     getListOfTasks();
-  }, [responseStatus]);
-  console.log("logging list of tasks", listOfTasks);
+  }, []);
+
   const [addDescription, setAddDescription] = useState<string>("");
   const [addDate, setAddDate] = useState<string>(today);
   const listOfTasksInProgress: oneTask[] = filterTasksAsInprogress(listOfTasks);
   const listOfTasksMarkedAsDone: oneTask[] = filterTasksAsDone(listOfTasks);
+
   const handleAddTask = () => {
     const itemToPost: oneTask = {
       description: addDescription,
@@ -39,11 +40,13 @@ function App(): JSX.Element {
       .then(() => setAddDate(today))
       .then(() => setAddDescription(""));
   };
+
   const handleDeleteTask = (task: oneTask) => {
     axios
       .delete(`https://to-do-back-end-app.onrender.com/todos/${task.id}`)
       .then((response) => setResponseStatus(response.status));
   };
+
   const handleMarkAsDone = (taskToUpdate: oneTask) => {
     axios
 
@@ -56,6 +59,7 @@ function App(): JSX.Element {
       .then((response) => setResponseStatus(response.status))
       .catch((error) => setResponseStatus(error));
   };
+
   const handleUpdateTask = (taskToUpdate: oneTask) => {
     axios
 
@@ -68,6 +72,7 @@ function App(): JSX.Element {
       .then((response) => setResponseStatus(response.status))
       .catch((error) => setResponseStatus(error));
   };
+  
   return (
     <>
       <h1>Create a new task</h1>
@@ -80,31 +85,37 @@ function App(): JSX.Element {
         To update task form the "To do" list provide description and choose a
         new date and then click "Update task" on the task you want to update.
       </p>
-      <p>Task description: </p>{" "}
-      <input
-        type="text"
-        id="description"
-        name="description"
-        onChange={(event) => {
-          setAddDescription(event.target.value);
-        }}
-      />
-      <br />
-      <p>Due Date: </p>
-      <input
-        type="date"
-        value={addDate}
-        placeholder="dd/mm/yyyy"
-        onChange={(event) => {
-          setAddDate(event.target.value);
-        }}
-      />
+
+      <div className="input">
+        <div>
+          <p>Task description: </p>
+          <input
+            className="inputbox"
+            type="text"
+            id="description"
+            name="description"
+            onChange={(event) => {
+              setAddDescription(event.target.value);
+            }}
+            />
+        </div>
+        <div>
+          <p>Due Date: </p>
+          <input
+            type="date"
+            value={addDate}
+            placeholder="dd/mm/yyyy"
+            onChange={(event) => {
+              setAddDate(event.target.value);
+            }}
+            />
+        </div>
+      </div>
+
       <br />
       <button onClick={handleAddTask}>Add task</button>
-      <h1>To do list</h1>
-      <p>{addDescription}</p>
-      <p>{addDate}</p>
-      <p>Status:{responseStatus}</p>
+      <h2>To do list</h2>
+      
       <div className="table">
         {listOfTasksInProgress.map((task) => {
           return (
@@ -127,7 +138,7 @@ function App(): JSX.Element {
           );
         })}
       </div>
-      <h1>Tasks marked as "Done"</h1>
+      <h2>Tasks marked as "Done"</h2>
       <div className="table">
         {listOfTasksMarkedAsDone.map((task) => {
           return (
