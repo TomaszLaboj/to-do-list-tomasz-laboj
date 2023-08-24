@@ -29,7 +29,7 @@ function App(): JSX.Element {
     axios
       .get("https://to-do-back-end-app.onrender.com/todos/")
       .then((response) => setListOfTasks(response.data));
-  }
+  };
 
   const handleAddTask = () => {
     const itemToPost: oneTask = {
@@ -43,13 +43,13 @@ function App(): JSX.Element {
 
       .then(() => setAddDate(today))
       .then(() => setAddDescription(""))
-      .then(() => getTasksList())
+      .then(() => getTasksList());
   };
 
   const handleDeleteTask = (task: oneTask) => {
     axios
       .delete(`https://to-do-back-end-app.onrender.com/todos/${task.id}`)
-      .then(() => getTasksList())
+      .then(() => getTasksList());
   };
 
   const handleMarkAsDone = (taskToUpdate: oneTask) => {
@@ -61,7 +61,7 @@ function App(): JSX.Element {
         due_date: taskToUpdate.due_date,
         status: "Done",
       })
-      .then(() => getTasksList())
+      .then(() => getTasksList());
   };
 
   const handleUpdateTask = (taskToUpdate: oneTask) => {
@@ -73,9 +73,9 @@ function App(): JSX.Element {
         due_date: addDate,
         status: taskToUpdate.status,
       })
-      .then(() => getTasksList())
+      .then(() => getTasksList());
   };
-  
+
   return (
     <>
       <h1>Create a new task</h1>
@@ -100,7 +100,7 @@ function App(): JSX.Element {
             onChange={(event) => {
               setAddDescription(event.target.value);
             }}
-            />
+          />
         </div>
         <div>
           <p>Due Date: </p>
@@ -111,14 +111,14 @@ function App(): JSX.Element {
             onChange={(event) => {
               setAddDate(event.target.value);
             }}
-            />
+          />
         </div>
       </div>
 
       <br />
       <button onClick={handleAddTask}>Add task</button>
       <h2>To do list</h2>
-      
+
       <div className="table">
         {listOfTasksInProgress.map((task) => {
           return (
