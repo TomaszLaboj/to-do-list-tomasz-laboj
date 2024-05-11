@@ -8,6 +8,7 @@ import "./App.css";
 import axios from "axios";
 import { Instructions } from "./components/Instructions";
 import { AddNewTask } from "./components/AddNewTask";
+import { ToDoList } from "./components/ToDoList";
 
 function App(): JSX.Element {
   const today = new Date().toISOString().substring(0, 10);
@@ -95,28 +96,12 @@ function App(): JSX.Element {
 
       <h2>To do list</h2>
 
-      <div className="table">
-        {listOfTasksInProgress.map((task) => {
-          return (
-            <div key={task.id}>
-              <input type="checkbox" onChange={() => handleMarkAsDone(task)} />
-              <span className="checkbox">Mark as done</span>
-              <button className="button" onClick={() => handleDeleteTask(task)}>
-                Delete task
-              </button>
-              <button className="button" onClick={() => handleUpdateTask(task)}>
-                Update task
-              </button>
-              <OneTaskElement
-                description={task.description}
-                date_added={task.date_added}
-                due_date={task.due_date}
-                status={task.status}
-              />
-            </div>
-          );
-        })}
-      </div>
+      <ToDoList
+        listOfTasks={listOfTasksInProgress}
+        handleDeleteTask={handleDeleteTask}
+        handleMarkAsDone={handleMarkAsDone}
+        handleUpdateTask={handleUpdateTask}
+      />
       <h2>Tasks marked as "Done"</h2>
       <div className="table">
         {listOfTasksMarkedAsDone.map((task) => {
