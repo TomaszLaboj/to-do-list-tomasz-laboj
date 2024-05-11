@@ -1,4 +1,4 @@
-import { oneTask, OneTaskElement } from "./components/oneTask";
+import { OneTask, OneTaskElement } from "./components/OneTask";
 import { useState, useEffect } from "react";
 import {
   filterTasksAsDone,
@@ -6,10 +6,11 @@ import {
 } from "./utils/filterTasks";
 import "./App.css";
 import axios from "axios";
+import { Instructions } from "./components/Instructions";
 
 function App(): JSX.Element {
   const today = new Date().toISOString().substring(0, 10);
-  const [listOfTasks, setListOfTasks] = useState<oneTask[]>([]);
+  const [listOfTasks, setListOfTasks] = useState<OneTask[]>([]);
 
   useEffect(() => {
     function getListOfTasks() {
@@ -23,8 +24,8 @@ function App(): JSX.Element {
   const [addDescription, setAddDescription] = useState<string>("");
   const [addDate, setAddDate] = useState<string>(today);
 
-  const listOfTasksInProgress: oneTask[] = filterTasksAsInprogress(listOfTasks);
-  const listOfTasksMarkedAsDone: oneTask[] = filterTasksAsDone(listOfTasks);
+  const listOfTasksInProgress: OneTask[] = filterTasksAsInprogress(listOfTasks);
+  const listOfTasksMarkedAsDone: OneTask[] = filterTasksAsDone(listOfTasks);
 
   const getTasksList = () => {
     axios
@@ -33,7 +34,7 @@ function App(): JSX.Element {
   };
 
   const handleAddTask = () => {
-    const itemToPost: oneTask = {
+    const itemToPost: OneTask = {
       description: addDescription,
       date_added: today,
       due_date: addDate,
@@ -47,13 +48,13 @@ function App(): JSX.Element {
       .then(() => getTasksList());
   };
 
-  const handleDeleteTask = (task: oneTask) => {
+  const handleDeleteTask = (task: OneTask) => {
     axios
       .delete(`https://to-do-back-end-app.onrender.com/todos/${task.id}`)
       .then(() => getTasksList());
   };
 
-  const handleMarkAsDone = (taskToUpdate: oneTask) => {
+  const handleMarkAsDone = (taskToUpdate: OneTask) => {
     axios
 
       .put(`https://to-do-back-end-app.onrender.com/todos/${taskToUpdate.id}`, {
@@ -65,7 +66,7 @@ function App(): JSX.Element {
       .then(() => getTasksList());
   };
 
-  const handleUpdateTask = (taskToUpdate: oneTask) => {
+  const handleUpdateTask = (taskToUpdate: OneTask) => {
     axios
 
       .put(`https://to-do-back-end-app.onrender.com/todos/${taskToUpdate.id}`, {
@@ -81,26 +82,7 @@ function App(): JSX.Element {
   return (
     <>
       <h1>Create a new task</h1>
-      <p className="instructions">
-        Instructions:
-        <br />
-        To add a new task to the list provide a description and choose a date -
-        otherwise the date will be added as today.
-        <br />
-        To update task form the "To do" list provide description and choose a
-        new date and then click "Update task" on the task you want to update.
-        <br />
-        GitHub repos:{" "}
-        <a href="https://github.com/TomaszLaboj/to-do-list-tomasz-laboj">
-          front end
-        </a>{" "}
-        and{" "}
-        <a href="https://github.com/TomaszLaboj/to-do-list-back-end-tomasz-laboj">
-          back end
-        </a>
-        .
-      </p>
-
+      <Instructions />
       <div className="input">
         <div>
           <p>Task description: </p>

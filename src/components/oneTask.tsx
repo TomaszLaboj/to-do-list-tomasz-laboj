@@ -1,11 +1,11 @@
-export interface oneTask {
+export interface OneTask {
   description: string;
   date_added: string;
   due_date: string;
   status: string;
   id?: number | undefined;
 }
-export function OneTaskElement(props: oneTask): JSX.Element {
+export function OneTaskElement(props: OneTask): JSX.Element {
   return (
     <>
       <div className="oneTask">
