@@ -5,6 +5,7 @@ export interface OneTask {
   status: string;
   id?: number | undefined;
 }
+
 export function OneTaskElement(props: OneTask): JSX.Element {
   return (
     <>
