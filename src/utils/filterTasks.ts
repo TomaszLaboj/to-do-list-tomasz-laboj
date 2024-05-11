@@ -1,4 +1,4 @@
-import { OneTask } from "../components/OneTask";
+import { OneTask } from "../components/oneTask";
 
 export function filterTasksAsInprogress(listOfTasks: OneTask[]): OneTask[] {
   const listOfTasksInProgress = listOfTasks.filter(

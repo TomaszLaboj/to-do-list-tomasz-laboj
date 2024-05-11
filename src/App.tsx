@@ -1,4 +1,4 @@
-import { OneTask, OneTaskElement } from "./components/OneTask";
+import { OneTask, OneTaskElement } from "./components/oneTask";
 import { useState, useEffect } from "react";
 import {
   filterTasksAsDone,
@@ -7,6 +7,7 @@ import {
 import "./App.css";
 import axios from "axios";
 import { Instructions } from "./components/Instructions";
+import { AddNewTask } from "./components/AddNewTask";
 
 function App(): JSX.Element {
   const today = new Date().toISOString().substring(0, 10);
@@ -83,33 +84,12 @@ function App(): JSX.Element {
     <>
       <h1>Create a new task</h1>
       <Instructions />
-      <div className="input">
-        <div>
-          <p>Task description: </p>
-          <input
-            value={addDescription}
-            className="inputbox"
-            type="text"
-            id="description"
-            name="description"
-            onChange={(event) => {
-              setAddDescription(event.target.value);
-            }}
-          />
-        </div>
-        <div>
-          <p>Due Date: </p>
-          <input
-            type="date"
-            value={addDate}
-            placeholder="dd/mm/yyyy"
-            onChange={(event) => {
-              setAddDate(event.target.value);
-            }}
-          />
-        </div>
-      </div>
-
+      <AddNewTask
+        addDate={addDate}
+        addDescription={addDescription}
+        setAddDescription={setAddDescription}
+        setAddDate={setAddDate}
+      />
       <br />
       <button onClick={handleAddTask}>Add task</button>
 
