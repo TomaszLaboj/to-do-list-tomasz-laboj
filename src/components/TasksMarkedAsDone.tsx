@@ -1,6 +1,6 @@
 import { OneTask, OneTaskElement } from "./oneTask";
 
-interface TasksMarkedAsDone {
+interface TasksMarkedAsDoneProps {
   listOfTasksMarkedAsDone: OneTask[];
   handleDeleteTask: (task: OneTask) => void;
 }
@@ -8,7 +8,7 @@ interface TasksMarkedAsDone {
 export function TasksMarkedAsDone({
   listOfTasksMarkedAsDone,
   handleDeleteTask,
-}: TasksMarkedAsDone) {
+}: TasksMarkedAsDoneProps) {
   return (
     <>
       <div className="table">
