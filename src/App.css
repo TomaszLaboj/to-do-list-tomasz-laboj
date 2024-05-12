@@ -2,10 +2,6 @@ body {
   background-color: darkgray;
 }
 
-.instructions {
-  font-size: 12px;
-}
-
 .input {
   display: inline-flex;
 }

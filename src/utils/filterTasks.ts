@@ -1,12 +1,12 @@
-import { oneTask } from "../components/oneTask";
+import { OneTask } from "../components/oneTask";
 
-export function filterTasksAsInprogress(listOfTasks: oneTask[]): oneTask[] {
+export function filterTasksAsInprogress(listOfTasks: OneTask[]): OneTask[] {
   const listOfTasksInProgress = listOfTasks.filter(
     (task) => task.status === "In progress"
   );
   return listOfTasksInProgress;
 }
-export function filterTasksAsDone(listOfTasks: oneTask[]): oneTask[] {
+export function filterTasksAsDone(listOfTasks: OneTask[]): OneTask[] {
   const listOfTasksInProgress = listOfTasks.filter(
     (task) => task.status === "Done"
   );

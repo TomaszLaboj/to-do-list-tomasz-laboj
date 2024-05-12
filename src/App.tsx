@@ -1,4 +1,4 @@
-import { oneTask, OneTaskElement } from "./components/oneTask";
+import { OneTask } from "./components/oneTask";
 import { useState, useEffect } from "react";
 import {
   filterTasksAsDone,
@@ -6,10 +6,17 @@ import {
 } from "./utils/filterTasks";
 import "./App.css";
 import axios from "axios";
+import { Instructions } from "./components/Instructions";
+import { AddNewTask } from "./components/AddNewTask";
+import { ToDoList } from "./components/ToDoList";
+import { TasksMarkedAsDone } from "./components/TasksMarkedAsDone";
+import { Footer } from "./components/Footer";
 
 function App(): JSX.Element {
   const today = new Date().toISOString().substring(0, 10);
-  const [listOfTasks, setListOfTasks] = useState<oneTask[]>([]);
+  const [listOfTasks, setListOfTasks] = useState<OneTask[]>([]);
+  const [addDescription, setAddDescription] = useState<string>("");
+  const [addDate, setAddDate] = useState<string>(today);
 
   useEffect(() => {
     function getListOfTasks() {
@@ -20,11 +27,8 @@ function App(): JSX.Element {
     getListOfTasks();
   }, []);
 
-  const [addDescription, setAddDescription] = useState<string>("");
-  const [addDate, setAddDate] = useState<string>(today);
-
-  const listOfTasksInProgress: oneTask[] = filterTasksAsInprogress(listOfTasks);
-  const listOfTasksMarkedAsDone: oneTask[] = filterTasksAsDone(listOfTasks);
+  const listOfTasksInProgress: OneTask[] = filterTasksAsInprogress(listOfTasks);
+  const listOfTasksMarkedAsDone: OneTask[] = filterTasksAsDone(listOfTasks);
 
   const getTasksList = () => {
     axios
@@ -33,7 +37,7 @@ function App(): JSX.Element {
   };
 
   const handleAddTask = () => {
-    const itemToPost: oneTask = {
+    const itemToPost: OneTask = {
       description: addDescription,
       date_added: today,
       due_date: addDate,
@@ -47,13 +51,13 @@ function App(): JSX.Element {
       .then(() => getTasksList());
   };
 
-  const handleDeleteTask = (task: oneTask) => {
+  const handleDeleteTask = (task: OneTask) => {
     axios
       .delete(`https://to-do-back-end-app.onrender.com/todos/${task.id}`)
       .then(() => getTasksList());
   };
 
-  const handleMarkAsDone = (taskToUpdate: oneTask) => {
+  const handleMarkAsDone = (taskToUpdate: OneTask) => {
     axios
 
       .put(`https://to-do-back-end-app.onrender.com/todos/${taskToUpdate.id}`, {
@@ -65,7 +69,7 @@ function App(): JSX.Element {
       .then(() => getTasksList());
   };
 
-  const handleUpdateTask = (taskToUpdate: oneTask) => {
+  const handleUpdateTask = (taskToUpdate: OneTask) => {
     axios
 
       .put(`https://to-do-back-end-app.onrender.com/todos/${taskToUpdate.id}`, {
@@ -80,100 +84,26 @@ function App(): JSX.Element {
 
   return (
     <>
-      <h1>Create a new task</h1>
-      <p className="instructions">
-        Instructions:
-        <br />
-        To add a new task to the list provide a description and choose a date -
-        otherwise the date will be added as today.
-        <br />
-        To update task form the "To do" list provide description and choose a
-        new date and then click "Update task" on the task you want to update.
-        <br />
-        GitHub repos:{" "}
-        <a href="https://github.com/TomaszLaboj/to-do-list-tomasz-laboj">
-          front end
-        </a>{" "}
-        and{" "}
-        <a href="https://github.com/TomaszLaboj/to-do-list-back-end-tomasz-laboj">
-          back end
-        </a>
-        .
-      </p>
+      <Instructions />
+      <AddNewTask
+        addDate={addDate}
+        addDescription={addDescription}
+        setAddDescription={setAddDescription}
+        setAddDate={setAddDate}
+        handleAddTask={handleAddTask}
+      />
 
-      <div className="input">
-        <div>
-          <p>Task description: </p>
-          <input
-            value={addDescription}
-            className="inputbox"
-            type="text"
-            id="description"
-            name="description"
-            onChange={(event) => {
-              setAddDescription(event.target.value);
-            }}
-          />
-        </div>
-        <div>
-          <p>Due Date: </p>
-          <input
-            type="date"
-            value={addDate}
-            placeholder="dd/mm/yyyy"
-            onChange={(event) => {
-              setAddDate(event.target.value);
-            }}
-          />
-        </div>
-      </div>
-
-      <br />
-      <button onClick={handleAddTask}>Add task</button>
-
-      <h2>To do list</h2>
-
-      <div className="table">
-        {listOfTasksInProgress.map((task) => {
-          return (
-            <div key={task.id}>
-              <input type="checkbox" onChange={() => handleMarkAsDone(task)} />
-              <span className="checkbox">Mark as done</span>
-              <button className="button" onClick={() => handleDeleteTask(task)}>
-                Delete task
-              </button>
-              <button className="button" onClick={() => handleUpdateTask(task)}>
-                Update task
-              </button>
-              <OneTaskElement
-                description={task.description}
-                date_added={task.date_added}
-                due_date={task.due_date}
-                status={task.status}
-              />
-            </div>
-          );
-        })}
-      </div>
-      <h2>Tasks marked as "Done"</h2>
-      <div className="table">
-        {listOfTasksMarkedAsDone.map((task) => {
-          return (
-            <div key={task.id}>
-              <button className="button" onClick={() => handleDeleteTask(task)}>
-                Delete task
-              </button>
-
-              <OneTaskElement
-                description={task.description}
-                date_added={task.date_added}
-                due_date={task.due_date}
-                status={task.status}
-              />
-            </div>
-          );
-        })}
-      </div>
+      <ToDoList
+        listOfTasks={listOfTasksInProgress}
+        handleDeleteTask={handleDeleteTask}
+        handleMarkAsDone={handleMarkAsDone}
+        handleUpdateTask={handleUpdateTask}
+      />
+      <TasksMarkedAsDone
+        listOfTasksMarkedAsDone={listOfTasksMarkedAsDone}
+        handleDeleteTask={handleDeleteTask}
+      />
+      <Footer />
     </>
   );
 }
