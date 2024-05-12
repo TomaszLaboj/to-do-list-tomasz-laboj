@@ -1,4 +1,4 @@
-import { OneTask, OneTaskElement } from "./components/oneTask";
+import { OneTask } from "./components/oneTask";
 import { useState, useEffect } from "react";
 import {
   filterTasksAsDone,
@@ -9,6 +9,7 @@ import axios from "axios";
 import { Instructions } from "./components/Instructions";
 import { AddNewTask } from "./components/AddNewTask";
 import { ToDoList } from "./components/ToDoList";
+import { TasksMarkedAsDone } from "./components/TasksMarkedAsDone";
 
 function App(): JSX.Element {
   const today = new Date().toISOString().substring(0, 10);
@@ -102,25 +103,10 @@ function App(): JSX.Element {
         handleMarkAsDone={handleMarkAsDone}
         handleUpdateTask={handleUpdateTask}
       />
-      <h2>Tasks marked as "Done"</h2>
-      <div className="table">
-        {listOfTasksMarkedAsDone.map((task) => {
-          return (
-            <div key={task.id}>
-              <button className="button" onClick={() => handleDeleteTask(task)}>
-                Delete task
-              </button>
-
-              <OneTaskElement
-                description={task.description}
-                date_added={task.date_added}
-                due_date={task.due_date}
-                status={task.status}
-              />
-            </div>
-          );
-        })}
-      </div>
+      <TasksMarkedAsDone
+        listOfTasksMarkedAsDone={listOfTasksMarkedAsDone}
+        handleDeleteTask={handleDeleteTask}
+      />
     </>
   );
 }
