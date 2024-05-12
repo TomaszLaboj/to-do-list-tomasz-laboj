@@ -1,3 +1,8 @@
+import {
+  formatDateToDayMonthYear,
+  formatDateToYearMonthDay,
+} from "../utils/dateFormatter";
+
 interface AddNewTaskInterface {
   addDate: string;
   addDescription: string;
@@ -13,6 +18,9 @@ export function AddNewTask({
   setAddDate,
   handleAddTask,
 }: AddNewTaskInterface) {
+  const formatDate = (date: string) => {
+    setAddDate(formatDateToDayMonthYear(date));
+  };
   return (
     <div className="input">
       <div>
@@ -32,10 +40,10 @@ export function AddNewTask({
         <p>Due Date: </p>
         <input
           type="date"
-          value={addDate}
+          value={formatDateToYearMonthDay(addDate)}
           placeholder="dd/mm/yyyy"
           onChange={(event) => {
-            setAddDate(event.target.value);
+            formatDate(event.target.value);
           }}
         />
       </div>

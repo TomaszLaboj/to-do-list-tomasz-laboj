@@ -11,12 +11,14 @@ import { AddNewTask } from "./components/AddNewTask";
 import { ToDoList } from "./components/ToDoList";
 import { TasksMarkedAsDone } from "./components/TasksMarkedAsDone";
 import { Footer } from "./components/Footer";
+import { formatDateToDayMonthYear } from "./utils/dateFormatter";
 
 function App(): JSX.Element {
   const today = new Date().toISOString().substring(0, 10);
   const [listOfTasks, setListOfTasks] = useState<OneTask[]>([]);
   const [addDescription, setAddDescription] = useState<string>("");
-  const [addDate, setAddDate] = useState<string>(today);
+  const [addDate, setAddDate] = useState<string>("12/05/2024");
+  console.log(today);
 
   useEffect(() => {
     function getListOfTasks() {
@@ -39,7 +41,7 @@ function App(): JSX.Element {
   const handleAddTask = () => {
     const itemToPost: OneTask = {
       description: addDescription,
-      date_added: today,
+      date_added: formatDateToDayMonthYear(today),
       due_date: addDate,
       status: "In progress",
     };
