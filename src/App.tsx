@@ -18,7 +18,6 @@ function App(): JSX.Element {
   const [listOfTasks, setListOfTasks] = useState<OneTask[]>([]);
   const [addDescription, setAddDescription] = useState<string>("");
   const [addDate, setAddDate] = useState<string>("12/05/2024");
-  console.log(today);
 
   useEffect(() => {
     function getListOfTasks() {
