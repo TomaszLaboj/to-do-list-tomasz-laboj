@@ -1,7 +1,9 @@
+import "./Instructions.css";
+
 export function Instructions() {
   return (
     <>
-      <h1>Create a new task</h1>
+      <h1>To-do list</h1>
       <p className="instructions">
         Instructions:
         <br />

@@ -10,10 +10,13 @@ import { Instructions } from "./components/Instructions";
 import { AddNewTask } from "./components/AddNewTask";
 import { ToDoList } from "./components/ToDoList";
 import { TasksMarkedAsDone } from "./components/TasksMarkedAsDone";
+import { Footer } from "./components/Footer";
 
 function App(): JSX.Element {
   const today = new Date().toISOString().substring(0, 10);
   const [listOfTasks, setListOfTasks] = useState<OneTask[]>([]);
+  const [addDescription, setAddDescription] = useState<string>("");
+  const [addDate, setAddDate] = useState<string>(today);
 
   useEffect(() => {
     function getListOfTasks() {
@@ -23,9 +26,6 @@ function App(): JSX.Element {
     }
     getListOfTasks();
   }, []);
-
-  const [addDescription, setAddDescription] = useState<string>("");
-  const [addDate, setAddDate] = useState<string>(today);
 
   const listOfTasksInProgress: OneTask[] = filterTasksAsInprogress(listOfTasks);
   const listOfTasksMarkedAsDone: OneTask[] = filterTasksAsDone(listOfTasks);
@@ -103,6 +103,7 @@ function App(): JSX.Element {
         listOfTasksMarkedAsDone={listOfTasksMarkedAsDone}
         handleDeleteTask={handleDeleteTask}
       />
+      <Footer />
     </>
   );
 }
