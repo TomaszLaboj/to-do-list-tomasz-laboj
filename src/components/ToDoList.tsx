@@ -14,6 +14,7 @@ export function ToDoList({
 }: ToDoListInterface) {
   return (
     <div className="table">
+      <h2>To do list</h2>
       {listOfTasks.map((task: OneTask) => {
         return (
           <div key={task.id}>

@@ -11,8 +11,8 @@ export function TasksMarkedAsDone({
 }: TasksMarkedAsDone) {
   return (
     <>
-      <h2>Tasks marked as "Done"</h2>
       <div className="table">
+        <h2>Tasks marked as "Done"</h2>
         {listOfTasksMarkedAsDone.map((task) => {
           return (
             <div key={task.id}>

@@ -93,8 +93,6 @@ function App(): JSX.Element {
         handleAddTask={handleAddTask}
       />
 
-      <h2>To do list</h2>
-
       <ToDoList
         listOfTasks={listOfTasksInProgress}
         handleDeleteTask={handleDeleteTask}
