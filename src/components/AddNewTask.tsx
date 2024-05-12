@@ -3,6 +3,7 @@ interface AddNewTaskInterface {
   addDescription: string;
   setAddDescription: (value: string) => void;
   setAddDate: (value: string) => void;
+  handleAddTask: () => void;
 }
 
 export function AddNewTask({
@@ -10,6 +11,7 @@ export function AddNewTask({
   addDate,
   setAddDescription,
   setAddDate,
+  handleAddTask,
 }: AddNewTaskInterface) {
   return (
     <div className="input">
@@ -37,6 +39,8 @@ export function AddNewTask({
           }}
         />
       </div>
+      <br />
+      <button onClick={handleAddTask}>Add task</button>
     </div>
   );
 }

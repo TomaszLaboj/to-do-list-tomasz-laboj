@@ -84,16 +84,14 @@ function App(): JSX.Element {
 
   return (
     <>
-      <h1>Create a new task</h1>
       <Instructions />
       <AddNewTask
         addDate={addDate}
         addDescription={addDescription}
         setAddDescription={setAddDescription}
         setAddDate={setAddDate}
+        handleAddTask={handleAddTask}
       />
-      <br />
-      <button onClick={handleAddTask}>Add task</button>
 
       <h2>To do list</h2>
 
