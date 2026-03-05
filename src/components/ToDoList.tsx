@@ -27,6 +27,7 @@ export function ToDoList({
               Update task
             </button>
             <OneTaskElement
+              title={task.title}
               description={task.description}
               date_added={task.date_added}
               due_date={task.due_date}

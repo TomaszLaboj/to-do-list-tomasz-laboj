@@ -1,4 +1,7 @@
+import {TitleAndDescription} from "../App";
+
 export interface OneTask {
+  title: string;
   description: string;
   date_added: string;
   due_date: string;
@@ -11,6 +14,7 @@ export function OneTaskElement(props: OneTask): JSX.Element {
     <>
       <div className="oneTask">
         <p>
+          <span className="cells">{props.title}</span>
           <span className="cells">{props.description}</span>
           <span className="cells">{props.date_added}</span>
           <span className="cells">{props.due_date}</span>
