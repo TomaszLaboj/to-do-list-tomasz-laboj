@@ -12,6 +12,7 @@ import { ToDoList } from "./components/ToDoList";
 import { TasksMarkedAsDone } from "./components/TasksMarkedAsDone";
 import { Footer } from "./components/Footer";
 import { formatDateToDayMonthYear } from "./utils/dateFormatter";
+import Header from "./new-components/Header";
 
 function App(): JSX.Element {
   const today = new Date().toISOString().substring(0, 10);
@@ -85,7 +86,7 @@ function App(): JSX.Element {
 
   return (
     <>
-      <Instructions />
+      <Header />
       <AddNewTask
         addDate={addDate}
         addDescription={addDescription}
