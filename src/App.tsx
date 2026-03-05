@@ -48,14 +48,14 @@ function App(): JSX.Element {
     const task: OneTask = {
       title: titleAndDescription.title,
       description: titleAndDescription.description,
-      date_added: formatDateToDayMonthYear(today),
+      date_added: today,
       due_date: dueDate,
       status: "In progress",
     };
     axios
       .post(`${url}/todos/`, task)
 
-      .then(() => setDueDate(today))
+      .then(() => setDueDate(''))
       .then(() => ({title: '', description: ''}))
       .then(() => getTasksList());
   };
