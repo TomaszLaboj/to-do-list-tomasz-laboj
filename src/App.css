@@ -3,14 +3,42 @@ body {
   font-family: "DejaVu Sans", sans-serif;
 }
 
-.input {
-  display: inline-flex;
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
 }
 
-.inputbox {
-  width: 400px;
+.input-box {
+  padding: 1rem;
+
 }
 
+.description-box {
+  border: 1px solid grey;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.task-description-input {
+  resize: none;
+  overflow: hidden;
+}
+
+textarea {
+  padding: 1rem;
+  margin: 10px 0;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  min-width: 50rem;
+  transition: border-color 0.3s ease;
+}
+textarea:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
 .oneTask {
   display: inline-flex;
 }
