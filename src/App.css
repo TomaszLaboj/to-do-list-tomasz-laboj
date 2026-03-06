@@ -20,6 +20,10 @@ body {
   box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3),0 2px 6px 2px rgba(60,64,67,0.15);
 }
 
+.note-container:focus-within {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
 .title-input,
 .description-input,
 .date-input{
@@ -33,7 +37,31 @@ body {
   background: transparent;
 }
 
+.date-input {
+  width: 20%;
+  display: inline-block;
+}
 
+.description-input{
+  border-bottom: 1px solid #dadce0;
+  min-height: 1.5rem;
+  transition: min-height 0.25s ease;
+
+}
+
+.description-input:focus-within {
+  min-height: 10rem;
+}
+
+.close-button {
+  display: inline-block;
+  float: right;
+  background: transparent;
+  border: none;
+  height: 2rem;
+  width: 4rem;
+  font-weight: bold;
+}
 .oneTask {
   display: inline-flex;
 }

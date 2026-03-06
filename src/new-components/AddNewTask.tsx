@@ -56,22 +56,25 @@ const AddNewTask = ({
                 onInput={autoResize}
                 onChange={e => setAddDescription(e.target.value)}
             />
-            <input
-                type="date"
-                className="date-input"
-                value={dueDate}
-                placeholder="dd/mm/yyyy"
-                onChange={(event) => {
-                    handleDateChange(event.target.value);
-                }}
-            />
+            <span>
+                <input
+                    type="date"
+                    className="date-input"
+                    value={dueDate}
+                    placeholder="dd/mm/yyyy"
+                    onChange={(event) => {
+                        handleDateChange(event.target.value);
+                    }}
+                />
+                <button
+                    className="close-button"
+                    onClick={handleAddTask}
+                >
+                    Close
+                </button>
+            </span>
         </div>
-        <div>
-            <p>Due Date: </p>
 
-        </div>
-        <br />
-        <button onClick={handleAddTask}>Add task</button>
         </div>
 
     );
