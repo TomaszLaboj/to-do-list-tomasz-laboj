@@ -36,36 +36,39 @@ const AddNewTask = ({
 
     return (
         <div>
-        <div className="note-input">
+        <div className="note-container">
             <textarea
                 value={title}
+                id="title-input"
                 className="title-input"
                 placeholder="Title"
                 rows={1}
                 onInput={autoResize}
                 onChange={e => setAddTitle(e.target.value)}
             />
-            <br/>
 
             <textarea
                 value={description}
+                id="description-input"
                 className="description-input"
                 placeholder="Take a note..."
                 rows={1}
                 onInput={autoResize}
                 onChange={e => setAddDescription(e.target.value)}
             />
-        </div>
-        <div>
-            <p>Due Date: </p>
             <input
                 type="date"
+                className="date-input"
                 value={dueDate}
                 placeholder="dd/mm/yyyy"
                 onChange={(event) => {
                     handleDateChange(event.target.value);
                 }}
             />
+        </div>
+        <div>
+            <p>Due Date: </p>
+
         </div>
         <br />
         <button onClick={handleAddTask}>Add task</button>
