@@ -24,8 +24,7 @@ function App(): JSX.Element {
   const [listOfTasks, setListOfTasks] = useState<OneTask[]>([]);
   const [titleAndDescription, setTitleAndDescription] = useState<TitleAndDescription>({ title: '', description: ''});
   const [dueDate, setDueDate] = useState<string>('');
-    console.log(dueDate);
-  console.log(titleAndDescription)
+
   useEffect(() => {
     function getListOfTasks() {
       axios
@@ -54,9 +53,8 @@ function App(): JSX.Element {
     };
     axios
       .post(`${url}/todos/`, task)
-
       .then(() => setDueDate(''))
-      .then(() => ({title: '', description: ''}))
+      .then(() => setTitleAndDescription({title: '', description: ''}))
       .then(() => getTasksList());
   };
 
@@ -68,7 +66,6 @@ function App(): JSX.Element {
 
   const handleMarkAsDone = (taskToUpdate: OneTask) => {
     axios
-
       .put(`${url}/todos/${taskToUpdate.id}`, {
         title: taskToUpdate.title,
         description: taskToUpdate.description,
@@ -81,7 +78,6 @@ function App(): JSX.Element {
 
   const handleUpdateTask = (taskToUpdate: OneTask) => {
     axios
-
       .put(`${url}/todos/${taskToUpdate.id}`, {
         title: taskToUpdate.title,
         description: taskToUpdate.description,
