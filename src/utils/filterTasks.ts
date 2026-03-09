@@ -12,3 +12,10 @@ export function filterTasksAsDone(listOfTasks: OneTask[]): OneTask[] {
   );
   return listOfTasksInProgress;
 }
+
+export function showUnfinishedTasks(listOfTasks: OneTask[]): OneTask[] {
+  const listOfTasksInProgress = listOfTasks.filter(
+      (task) => task.status !== "Done"
+  );
+  return listOfTasksInProgress;
+}
