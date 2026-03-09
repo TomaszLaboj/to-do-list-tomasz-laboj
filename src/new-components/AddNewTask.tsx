@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-interface AddNewTaskInterface {
+export interface AddNewTaskInterface {
     dueDate: string;
     title: string;
     description: string;

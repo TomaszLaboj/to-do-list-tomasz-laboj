@@ -7,11 +7,12 @@ import {
 import "./App.css";
 import axios from "axios";
 import AddNewTask from "./new-components/AddNewTask";
-import { ToDoList } from "./components/ToDoList";
+import { ToDoListOld } from "./components/ToDoListOld";
 import { TasksMarkedAsDone } from "./components/TasksMarkedAsDone";
 import { Footer } from "./components/Footer";
 import Header from "./new-components/Header";
 import { url } from './utils/utils'
+import ToDoList from "./new-components/ToDoList";
 
 export type TitleAndDescription = {
     title: string;
@@ -120,6 +121,9 @@ function App(): JSX.Element {
         />
         <br/>
         <ToDoList
+            listOfTasks={listOfTasks}
+        />
+        <ToDoListOld
             listOfTasks={listOfTasksInProgress}
             handleDeleteTask={handleDeleteTask}
             handleMarkAsDone={handleMarkAsDone}
