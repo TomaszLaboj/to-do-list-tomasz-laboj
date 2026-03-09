@@ -10,7 +10,6 @@ import AddNewTask from "./new-components/AddNewTask";
 import { ToDoList } from "./components/ToDoList";
 import { TasksMarkedAsDone } from "./components/TasksMarkedAsDone";
 import { Footer } from "./components/Footer";
-import { formatDateToDayMonthYear } from "./utils/dateFormatter";
 import Header from "./new-components/Header";
 import { url } from './utils/utils'
 
@@ -25,23 +24,18 @@ function App(): JSX.Element {
   const [titleAndDescription, setTitleAndDescription] = useState<TitleAndDescription>({ title: '', description: ''});
   const [dueDate, setDueDate] = useState<string>('');
 
-  useEffect(() => {
-    function getListOfTasks() {
+  const getTasksList = () => {
       axios
         .get(`${url}/todos/`)
         .then((response) => setListOfTasks(response.data));
-    }
-    getListOfTasks();
+    };
+
+  useEffect(() => {
+    getTasksList();
   }, []);
 
   const listOfTasksInProgress: OneTask[] = filterTasksAsInprogress(listOfTasks);
   const listOfTasksMarkedAsDone: OneTask[] = filterTasksAsDone(listOfTasks);
-
-  const getTasksList = () => {
-    axios
-      .get(`${url}/todos/`)
-      .then((response) => setListOfTasks(response.data));
-  };
 
   const handleAddTask = () => {
     const task: OneTask = {
