@@ -26,7 +26,7 @@ body {
 
 .title-input,
 .description-input,
-.date-input{
+.date-input {
   width: 100%;
 
   border: none;
@@ -42,14 +42,10 @@ body {
   display: inline-block;
 }
 
-.description-input{
+.description-input {
   border-bottom: 1px solid #dadce0;
-  min-height: 1.5rem;
+  min-height: 5rem;
   transition: min-height 0.25s ease;
-}
-
-.description-input:focus-within {
-  min-height: 10rem;
 }
 
 .close-button {
@@ -61,6 +57,11 @@ body {
   width: 4rem;
   font-weight: bold;
 }
+
+.collapsed-input {
+  color: #A9A9A9;
+}
+
 .oneTask {
   display: inline-flex;
 }

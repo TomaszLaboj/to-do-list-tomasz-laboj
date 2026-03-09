@@ -1,8 +1,8 @@
 import { OneTask } from "./components/oneTask";
 import { useState, useEffect } from "react";
 import {
-  filterTasksAsDone,
-  filterTasksAsInprogress,
+    filterTasksAsDone,
+    showUnfinishedTasks,
 } from "./utils/filterTasks";
 import "./App.css";
 import axios from "axios";
@@ -34,7 +34,7 @@ function App(): JSX.Element {
     getTasksList();
   }, []);
 
-  const listOfTasksInProgress: OneTask[] = filterTasksAsInprogress(listOfTasks);
+  const listOfTasksInProgress: OneTask[] = showUnfinishedTasks(listOfTasks);
   const listOfTasksMarkedAsDone: OneTask[] = filterTasksAsDone(listOfTasks);
 
   const handleAddTask = () => {

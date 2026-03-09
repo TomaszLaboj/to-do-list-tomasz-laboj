@@ -1,8 +1,4 @@
-import {
-    formatDateToDayMonthYear,
-    formatDateToYearMonthDay,
-} from "../utils/dateFormatter";
-import React, {useRef} from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface AddNewTaskInterface {
     dueDate: string;
@@ -23,58 +19,105 @@ const AddNewTask = ({
     setAddDate,
     handleAddTask,
     }: AddNewTaskInterface) => {
+    const [expanded, setExpanded] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        if (expanded) {
+            descriptionRef.current?.focus();
+        }
+    }, [expanded]);
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (!containerRef.current?.contains(e.target as Node)) {
+                if(title||description) {
+                    handleAddTask();
+                }
+                setExpanded(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+    }, [title, description])
+
     const handleDateChange = (date: string) => {
         setAddDate(date);
     };
 
     const autoResize = (e: React.FormEvent<HTMLTextAreaElement>)=> {
         const el = e.currentTarget;
+        console.log(el);
         el.style.height = "0px";
         el.style.height = el.scrollHeight + "px";
     }
 
+    const handleClickClose = () => {
+        if (title || description) handleAddTask();
+        setExpanded(false);
+    }
 
     return (
-        <div>
-        <div className="note-container">
-            <textarea
-                value={title}
-                id="title-input"
-                className="title-input"
-                placeholder="Title"
-                rows={1}
-                onInput={autoResize}
-                onChange={e => setAddTitle(e.target.value)}
-            />
 
-            <textarea
-                value={description}
-                id="description-input"
-                className="description-input"
-                placeholder="Take a note..."
-                rows={1}
-                onInput={autoResize}
-                onChange={e => setAddDescription(e.target.value)}
-            />
-            <span>
-                <input
-                    type="date"
-                    className="date-input"
-                    value={dueDate}
-                    placeholder="dd/mm/yyyy"
-                    onChange={(event) => {
-                        handleDateChange(event.target.value);
-                    }}
-                />
-                <button
-                    className="close-button"
-                    onClick={handleAddTask}
+
+        <div
+            className="note-container"
+            ref={containerRef}
+        >
+            {expanded ?
+                <>
+                    <textarea
+                        value={title}
+                        id="title-input"
+                        className="title-input"
+                        placeholder="Title"
+                        rows={1}
+
+                        onInput={autoResize}
+                        onChange={e => setAddTitle(e.target.value)}
+                    />
+                    <textarea
+                        value={description}
+                        ref={descriptionRef}
+                        id="description-input"
+                        className={'description-input'}
+                        placeholder="Take a note..."
+                        rows={1}
+
+                        onInput={autoResize}
+                        onChange={e => setAddDescription(e.target.value)}
+                    />
+                        <span>
+                            <input
+                                type="date"
+                                className="date-input"
+                                value={dueDate}
+                                placeholder="dd/mm/yyyy"
+
+                                onChange={(event) => {
+                                    handleDateChange(event.target.value);
+                                }}
+                            />
+                            <button
+                                className="close-button"
+                                onClick={handleClickClose}
+                            >
+                                Close
+                            </button>
+                        </span>
+                </>
+                :
+                <div
+                    onClick={() => setExpanded(true)}
+                    className='collapsed-input'
                 >
-                    Close
-                </button>
-            </span>
-        </div>
-
+                    Take a note...
+                </div>
+            }
         </div>
 
     );

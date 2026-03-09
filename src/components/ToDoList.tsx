@@ -6,6 +6,7 @@ interface ToDoListInterface {
   handleDeleteTask: (task: OneTask) => void;
   handleUpdateTask: (task: OneTask) => void;
 }
+
 export function ToDoList({
   listOfTasks,
   handleMarkAsDone,
