@@ -79,10 +79,11 @@ const Task = ({
                     placeholder={dueDate}
                     onChange={(e) => updateDueDate(e.target.value)}
                 />
-                <button
-                    className="task-footer-bin-icon-button"
-                    onClick={() => deleteTask(id)}
-                >
+                <span className="task-editor-footer-bin-and-close-buttons">
+                    <button
+                        onClick={() => deleteTask(id)}
+                        className="task-editor-footer-bin-icon-button"
+                    >
                         <BiTrash />
                     </button>
                 <button
@@ -91,6 +92,8 @@ const Task = ({
                 >
                     Close
                 </button>
+                </span>
+
             </span>
         </div>
 

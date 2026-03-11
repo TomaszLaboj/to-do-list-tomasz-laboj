@@ -127,12 +127,21 @@ body {
   display: inline-block;
   float: right;
 }
+.task-editor-footer-bin-icon-button {
+  margin-top: 5px;
+  background: none;
+  border: none;
+}
 
 .task-footer-bin-icon-button {
   background: none;
   border: none;
 }
 
+.task-editor-footer-bin-and-close-buttons {
+  display: inline-block;
+  float: right;
+}
 .date-added {
   display: inline-block;
   float: right;
