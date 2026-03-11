@@ -1,7 +1,8 @@
 import {FormEvent, useEffect, useRef, useState} from "react";
 
 
-interface TaskInterface {
+interface TaskEditorInterface {
+    id: number | undefined;
     title: string;
     description: string;
     dateAdded: string;
@@ -12,10 +13,12 @@ interface TaskInterface {
     updateDueDate: (dueDate: string) => void;
     updateStatus: (status: string) => void;
     closeAndUpdate: () => void;
+    deleteTask: (taskId: number | undefined) => void;
 }
 
 const Task = ({
-        title,
+        id,
+                  title,
         description,
         dateAdded,
         dueDate,
@@ -25,7 +28,8 @@ const Task = ({
         updateDueDate,
         updateStatus,
         closeAndUpdate,
-              }: TaskInterface) => {
+    deleteTask,
+              }: TaskEditorInterface) => {
     const [expanded, setExpanded] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const descriptionRef = useRef<HTMLTextAreaElement>(null);

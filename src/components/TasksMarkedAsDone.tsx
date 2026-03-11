@@ -2,7 +2,7 @@ import { OneTask, OneTaskElement } from "./oneTask";
 
 interface TasksMarkedAsDoneProps {
   listOfTasksMarkedAsDone: OneTask[];
-  handleDeleteTask: (task: OneTask) => void;
+  handleDeleteTask: (taskId: number | undefined) => void;
 }
 
 export function TasksMarkedAsDone({
@@ -16,7 +16,7 @@ export function TasksMarkedAsDone({
         {listOfTasksMarkedAsDone.map((task) => {
           return (
             <div key={task.id}>
-              <button className="button" onClick={() => handleDeleteTask(task)}>
+              <button className="button" onClick={() => handleDeleteTask(task.id)}>
                 Delete task
               </button>
 

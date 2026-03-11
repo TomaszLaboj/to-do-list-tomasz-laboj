@@ -7,11 +7,13 @@ import isEqual from "lodash/isEqual";
 interface ListOfTasksProps {
     listOfTasks: OneTask[];
     updateTask: (task: OneTask) => void;
+    deleteTask: (taskId: number | undefined) => void;
 }
 
 const TasksList = ({
     listOfTasks,
     updateTask,
+    deleteTask
 }: ListOfTasksProps) => {
     const [highlightedTask, setHighlightedTask] = useState<OneTask | undefined>(undefined)
     const [highlightedTaskOriginal, setHighlightedTaskOriginal] = useState<OneTask | undefined>(undefined)
@@ -95,11 +97,13 @@ const TasksList = ({
                             onClick={() => handleHighlightTask(task)}
                         >
                         <Task
+                            id={task.id}
                             title={task.title}
                             description={task.description}
                             dateAdded={new Date(task.date_added).toLocaleDateString()}
                             dueDate={task.due_date && new Date(task.due_date).toLocaleDateString()}
                             status={task.status}
+                            deleteTask={deleteTask}
                         />
                     </div>
                 );
@@ -108,6 +112,7 @@ const TasksList = ({
         {highlightedTask &&
             <div className="background">
                 <TaskEditor
+                    id={highlightedTask.id}
                     title={highlightedTask?.title}
                     description={highlightedTask?.description}
                     dateAdded={highlightedTask?.date_added}
@@ -118,6 +123,7 @@ const TasksList = ({
                     updateStatus={handleUpdateStatus}
                     updateDueDate={handleUpdateDueDate}
                     closeAndUpdate={handleCloseAndUpdate}
+                    deleteTask={deleteTask}
                 />
             </div>
         }

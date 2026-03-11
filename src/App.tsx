@@ -55,10 +55,12 @@ function App() {
       .then(() => getTasksList());
   };
 
-  const handleDeleteTask = (task: OneTask) => {
-    axios
-      .delete(`${url}/todos/${task.id}`)
+  const handleDeleteTask = (taskId: number | undefined) => {
+    if (taskId) {
+      axios
+      .delete(`${url}/todos/${taskId}`)
       .then(() => getTasksList());
+    }
   };
 
   const handleMarkAsDone = (taskToUpdate: OneTask) => {
@@ -123,7 +125,7 @@ function App() {
         <TasksList
             listOfTasks={activeTasks(listOfTasks)}
             updateTask={handleUpdateTask}
-
+            deleteTask={handleDeleteTask}
         />
         <TasksMarkedAsDone
             listOfTasksMarkedAsDone={archivedTasks(listOfTasks)}
