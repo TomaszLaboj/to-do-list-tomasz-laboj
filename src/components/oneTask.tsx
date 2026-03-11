@@ -2,7 +2,7 @@ export interface OneTask {
   title: string;
   description: string;
   date_added: string;
-  due_date?: string;
+  due_date?: string | undefined;
   status: string;
   id?: number | undefined;
 }

@@ -6,14 +6,14 @@ export function filterTasksAsInprogress(listOfTasks: OneTask[]): OneTask[] {
   );
   return listOfTasksInProgress;
 }
-export function filterTasksAsDone(listOfTasks: OneTask[]): OneTask[] {
+export function archivedTasks(listOfTasks: OneTask[]): OneTask[] {
   const listOfTasksInProgress = listOfTasks.filter(
     (task) => task.status === "Done"
   );
   return listOfTasksInProgress;
 }
 
-export function showUnfinishedTasks(listOfTasks: OneTask[]): OneTask[] {
+export function activeTasks(listOfTasks: OneTask[]): OneTask[] {
   const listOfTasksInProgress = listOfTasks.filter(
       (task) => task.status !== "Done"
   );

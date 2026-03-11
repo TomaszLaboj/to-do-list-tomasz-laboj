@@ -1,8 +1,8 @@
 import { OneTask } from "./components/oneTask";
 import { useState, useEffect } from "react";
 import {
-    filterTasksAsDone,
-    showUnfinishedTasks,
+    archivedTasks,
+    activeTasks,
 } from "./utils/filterTasks";
 import "./App.css";
 import axios from "axios";
@@ -12,7 +12,7 @@ import { TasksMarkedAsDone } from "./components/TasksMarkedAsDone";
 import { Footer } from "./components/Footer";
 import Header from "./new-components/Header";
 import { url } from './utils/utils'
-import ToDoList from "./new-components/ToDoList";
+import TasksList from "./new-components/TasksList";
 
 export type TitleAndDescription = {
     title: string;
@@ -34,9 +34,6 @@ function App(): JSX.Element {
   useEffect(() => {
     getTasksList();
   }, []);
-
-  const listOfTasksInProgress: OneTask[] = showUnfinishedTasks(listOfTasks);
-  const listOfTasksMarkedAsDone: OneTask[] = filterTasksAsDone(listOfTasks);
 
   const handleAddTask = () => {
     const task: OneTask = dueDate ? {
@@ -77,20 +74,22 @@ function App(): JSX.Element {
   };
 
   const handleUpdateTask = (taskToUpdate: OneTask) => {
-      const task = taskToUpdate.due_date ? {
+      const task: OneTask = taskToUpdate.due_date ? {
+          id: taskToUpdate.id,
               title: taskToUpdate.title,
               description: taskToUpdate.description,
               date_added: taskToUpdate.date_added,
-              due_date: dueDate,
+              due_date: taskToUpdate.due_date,
               status: taskToUpdate.status,
           } : {
+          id: taskToUpdate.id,
           title: taskToUpdate.title,
           description: taskToUpdate.description,
           date_added: taskToUpdate.date_added,
           status: taskToUpdate.status,
       }
       axios
-      .put(`${url}/todos/${taskToUpdate.id}`, task)
+      .put(`${url}/todos/${task.id}`, task)
       .then(() => setTitleAndDescription({title: '', description: ''}))
       .then(() => getTasksList());
   };
@@ -120,17 +119,13 @@ function App(): JSX.Element {
             handleAddTask={handleAddTask}
         />
         <br/>
-        <ToDoList
-            listOfTasks={listOfTasks}
-        />
-        <ToDoListOld
-            listOfTasks={listOfTasksInProgress}
-            handleDeleteTask={handleDeleteTask}
-            handleMarkAsDone={handleMarkAsDone}
-            handleUpdateTask={handleUpdateTask}
+        <TasksList
+            listOfTasks={activeTasks(listOfTasks)}
+            updateTask={handleUpdateTask}
+
         />
         <TasksMarkedAsDone
-            listOfTasksMarkedAsDone={listOfTasksMarkedAsDone}
+            listOfTasksMarkedAsDone={archivedTasks(listOfTasks)}
             handleDeleteTask={handleDeleteTask}
         />
         <Footer />
