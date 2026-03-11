@@ -17,7 +17,7 @@ interface TaskEditorInterface {
     deleteTask: (taskId: number | undefined) => void;
 }
 
-const Task = ({
+const TaskEditor = ({
         id,
                   title,
         description,
@@ -100,7 +100,7 @@ const Task = ({
     )
 };
 
-export default Task;
+export default TaskEditor;
 
 
 

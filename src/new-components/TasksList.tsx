@@ -77,6 +77,13 @@ const TasksList = ({
         })
     };
 
+    const handleDeleteTask = (taskId: number | undefined) => {
+        deleteTask(taskId);
+        setHighlightedTask(undefined);
+        setHighlightedTaskOriginal(undefined);
+        if (edited) setEdited(false);
+    }
+
     const handleCloseAndUpdate = () => {
         if (highlightedTask && edited && !isEqual(highlightedTask, highlightedTaskOriginal)) {
             updateTask(highlightedTask);
@@ -123,7 +130,7 @@ const TasksList = ({
                     updateStatus={handleUpdateStatus}
                     updateDueDate={handleUpdateDueDate}
                     closeAndUpdate={handleCloseAndUpdate}
-                    deleteTask={deleteTask}
+                    deleteTask={handleDeleteTask}
                 />
             </div>
         }
