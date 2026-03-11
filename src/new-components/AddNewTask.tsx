@@ -51,7 +51,6 @@ const AddNewTask = ({
 
     const autoResize = (e: React.FormEvent<HTMLTextAreaElement>)=> {
         const el = e.currentTarget;
-        console.log(el);
         el.style.height = "0px";
         el.style.height = el.scrollHeight + "px";
     }

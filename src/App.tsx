@@ -110,7 +110,6 @@ function App() {
   return (
     <>
         <Header />
-
         <AddNewTask
             dueDate={dueDate}
             title={titleAndDescription.title}

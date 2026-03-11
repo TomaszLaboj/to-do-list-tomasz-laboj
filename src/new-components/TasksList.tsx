@@ -117,7 +117,7 @@ const TasksList = ({
             })}
         </div>
         {highlightedTask &&
-            <div className="background">
+
                 <TaskEditor
                     id={highlightedTask.id}
                     title={highlightedTask?.title}
@@ -132,7 +132,7 @@ const TasksList = ({
                     closeAndUpdate={handleCloseAndUpdate}
                     deleteTask={handleDeleteTask}
                 />
-            </div>
+
         }
         </>
     );
