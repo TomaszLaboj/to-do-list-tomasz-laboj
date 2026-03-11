@@ -19,7 +19,7 @@ interface TaskEditorInterface {
 
 const TaskEditor = ({
         id,
-                  title,
+        title,
         description,
         dateAdded,
         dueDate,
