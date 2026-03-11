@@ -12,7 +12,6 @@ import { Footer } from "./components/Footer";
 import Header from "./new-components/Header";
 import { url } from './utils/utils'
 import TasksList from "./new-components/TasksList";
-import {BiTrash} from "react-icons/bi";
 
 export type TitleAndDescription = {
     title: string;

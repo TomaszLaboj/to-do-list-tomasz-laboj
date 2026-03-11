@@ -1,4 +1,5 @@
 import {FormEvent, useEffect, useRef, useState} from "react";
+import { BiTrash } from "react-icons/bi";
 
 
 interface TaskEditorInterface {
@@ -78,6 +79,12 @@ const Task = ({
                     placeholder={dueDate}
                     onChange={(e) => updateDueDate(e.target.value)}
                 />
+                <button
+                    className="task-footer-bin-icon-button"
+                    onClick={() => deleteTask(id)}
+                >
+                        <BiTrash />
+                    </button>
                 <button
                     className="close-button"
                     onClick={closeAndUpdate}

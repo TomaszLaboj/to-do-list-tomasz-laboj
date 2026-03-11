@@ -14,7 +14,7 @@ interface TaskInterface {
 
 const Task = ({
         id,
-                  title,
+        title,
         description,
         dateAdded,
         dueDate,
