@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {OneTask} from "../components/oneTask";
 import Task from "./Task";
 import TaskEditor from "./TaskEditor";
-import {  } from "lodash.isequal";
+import isEqual from "lodash/isEqual";
 
 interface ListOfTasksProps {
     listOfTasks: OneTask[];
@@ -78,12 +78,12 @@ const TasksList = ({
     };
 
     const handleCloseAndUpdate = () => {
-
-        if (highlightedTask && edited) {
+        if (highlightedTask && edited && !isEqual(highlightedTask, highlightedTaskOriginal)) {
             updateTask(highlightedTask);
         }
         setEdited(false);
         setHighlightedTask(undefined);
+        setHighlightedTaskOriginal(undefined);
     };
 
 
