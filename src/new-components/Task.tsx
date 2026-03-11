@@ -58,7 +58,10 @@ const Task = ({
                 <div className="task-footer-bin-icon">
                     <button
                         className="task-footer-bin-icon-button"
-                        onClick={() => deleteTask(id)}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            deleteTask(id);
+                        }}
                     >
                         <BiTrash />
                     </button>

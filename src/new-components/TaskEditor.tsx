@@ -1,4 +1,4 @@
-import {FormEvent, useEffect, useRef, useState} from "react";
+import {FormEvent, SyntheticEvent, useEffect, useRef, useState} from "react";
 import { BiTrash } from "react-icons/bi";
 
 
@@ -47,7 +47,7 @@ const TaskEditor = ({
     }, [title, id, description, dateAdded, dueDate, status, closeAndUpdate]);
 
 
-    const autoResize = (e: FormEvent<HTMLTextAreaElement>)=> {
+    const autoResize = (e: SyntheticEvent<HTMLTextAreaElement>)=> {
         const el = e.currentTarget;
         el.style.height = "0px";
         el.style.height = el.scrollHeight + "px";

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useRef, useState} from 'react';
 import {OneTask} from "../components/oneTask";
 import Task from "./Task";
 import TaskEditor from "./TaskEditor";
@@ -117,7 +117,6 @@ const TasksList = ({
             })}
         </div>
         {highlightedTask &&
-
                 <TaskEditor
                     id={highlightedTask.id}
                     title={highlightedTask?.title}
