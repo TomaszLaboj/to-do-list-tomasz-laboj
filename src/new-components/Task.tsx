@@ -1,4 +1,5 @@
 import {useEffect, useRef, useState} from "react";
+import { BiTrash } from "react-icons/bi";
 
 
 interface TaskInterface {
@@ -46,9 +47,14 @@ const Task = ({
             >
             {description}
             </div>
-            <span>
-                <div>
+            <span className="task-footer">
+                <div className="task-footer-date">
                    {dueDate && 'Due date: ' + dueDate}
+                </div>
+                <div className="task-footer-bin-icon">
+                    <button className="task-footer-bin-icon-button">
+                        <BiTrash />
+                    </button>
                 </div>
             </span>
         </div>

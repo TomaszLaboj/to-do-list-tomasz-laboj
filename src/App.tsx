@@ -7,19 +7,19 @@ import {
 import "./App.css";
 import axios from "axios";
 import AddNewTask from "./new-components/AddNewTask";
-import { ToDoListOld } from "./components/ToDoListOld";
 import { TasksMarkedAsDone } from "./components/TasksMarkedAsDone";
 import { Footer } from "./components/Footer";
 import Header from "./new-components/Header";
 import { url } from './utils/utils'
 import TasksList from "./new-components/TasksList";
+import {BiTrash} from "react-icons/bi";
 
 export type TitleAndDescription = {
     title: string;
     description: string;
 }
 
-function App(): JSX.Element {
+function App() {
   const today = new Date().toISOString().substring(0, 10);
   const [listOfTasks, setListOfTasks] = useState<OneTask[]>([]);
   const [titleAndDescription, setTitleAndDescription] = useState<TitleAndDescription>({ title: '', description: ''});
@@ -109,6 +109,7 @@ function App(): JSX.Element {
   return (
     <>
         <Header />
+
         <AddNewTask
             dueDate={dueDate}
             title={titleAndDescription.title}

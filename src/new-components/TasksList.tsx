@@ -15,10 +15,8 @@ const TasksList = ({
 }: ListOfTasksProps) => {
     const [highlightedTask, setHighlightedTask] = useState<OneTask | undefined>(undefined)
     const [highlightedTaskOriginal, setHighlightedTaskOriginal] = useState<OneTask | undefined>(undefined)
-    console.log(highlightedTask, highlightedTaskOriginal)
     const [edited, setEdited] = useState(false);
 
-    console.log(edited);
     const handleHighlightTask = (task: OneTask) => {
         setHighlightedTask(task);
         setHighlightedTaskOriginal({...task})
