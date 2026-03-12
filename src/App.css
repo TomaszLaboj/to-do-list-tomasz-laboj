@@ -104,17 +104,30 @@ body {
   font-weight: lighter;
 }
 
+.task-footer-buttons {
+  float: right;
+}
+
+.task-footer-archive-icon-button {
+  width: 2.6rem;
+  height: 2rem;
+  /* float: right; */
+  background: none;
+  border: none;
+  font-size: larger;
+}
+
 .task-footer-bin-icon-button {
   width: 2.6rem;
   height: 2rem;
-  display: inline-block;
   float: right;
   background: none;
   border: none;
   font-size: larger;
 }
 
-.task-footer-bin-icon-button:hover {
+.task-footer-bin-icon-button:hover,
+.task-footer-archive-icon-button:hover {
   background: #daddd8;
   border-radius: 8px;
 }
@@ -160,8 +173,7 @@ body {
 
 .task-editor-date-added {
   font-weight: lighter;
-  font-size: x-small;
-  display: inline-block;
+  font-size: small;
   float: right;
   background: transparent;
   border: none;

@@ -63,16 +63,19 @@ function App() {
     }
   };
 
-  const handleMarkAsDone = (taskToUpdate: OneTask) => {
-    axios
-      .put(`${url}/todos/${taskToUpdate.id}`, {
-        title: taskToUpdate.title,
-        description: taskToUpdate.description,
-        date_added: taskToUpdate.date_added,
-        due_date: taskToUpdate.due_date,
-        status: "Done",
-      })
-      .then(() => getTasksList());
+  const handleMarkAsDone = (taskId: number | undefined) => { // to do : refactor , to send just id and update in the back end
+    
+    const task = listOfTasks.find((task) => task.id === taskId)
+    console.log(task)
+    if (task) {
+      axios
+        .put(`${url}/todos/${task.id}`, {
+          ...task,
+          status: "Done"
+        })
+        .then(() => getTasksList());
+    }
+
   };
 
   const handleUpdateTask = (taskToUpdate: OneTask) => {
@@ -125,6 +128,7 @@ function App() {
             listOfTasks={activeTasks(listOfTasks)}
             updateTask={handleUpdateTask}
             deleteTask={handleDeleteTask}
+            updateStatus={handleMarkAsDone}
         />
          <br/>
         <ArchivedTasks

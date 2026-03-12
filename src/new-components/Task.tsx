@@ -8,7 +8,7 @@ interface TaskInterface {
     dueDate: string | undefined;
     status: string;
     deleteTask: (taskId: number | undefined) => void;
-    updateStatus: (taskId: number | undefined, status: string) => void;
+    updateStatus: (taskId: number | undefined) => void;
 }
 
 const Task = ({
@@ -19,6 +19,7 @@ const Task = ({
         dueDate,
         status,
         deleteTask,
+        updateStatus,
 }: TaskInterface) => {
 
     return (
@@ -39,24 +40,26 @@ const Task = ({
                 <div className="task-footer-date">
                    {dueDate && 'Due date: ' + dueDate}
                 </div>
+                <div className="task-footer-buttons">
                 <button
-                    className="task-footer-bin-icon-button"
+                    className="task-footer-archive-icon-button"
                     onClick={(e) => {
                         e.stopPropagation();
-                        deleteTask(id);
-                    }}
-                >
-                    <BiTrash />
-                </button>
-                <button
-                    className="task-footer-bin-icon-button"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        deleteTask(id);
+                        updateStatus(id);
                     }}
                 >
                     <BiSolidArchive />
                 </button>
+                <button
+                    className="task-footer-bin-icon-button"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        deleteTask(id)
+                    }}
+                >
+                    <BiTrash />
+                </button>
+                </div>
             </span>
         </div>
 

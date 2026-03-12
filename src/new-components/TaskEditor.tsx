@@ -29,7 +29,7 @@ const TaskEditor = ({
         updateDueDate,
         updateStatus,
         closeAndUpdate,
-    deleteTask,
+        deleteTask,
               }: TaskEditorInterface) => {
     const taskEditorRef = useRef<HTMLDivElement>(null);
     const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -47,7 +47,9 @@ const TaskEditor = ({
                     closeAndUpdate();
             }
         }
+        
         document.addEventListener("mousedown", handleClickOutside);
+
         if (titleRef.current) {
             titleRef.current.style.height = "0px";
             titleRef.current.style.height = titleRef.current.scrollHeight + "px";
@@ -102,6 +104,7 @@ const TaskEditor = ({
                     />
                     <span className="task-editor-footer-bin-and-close-buttons">
                         <button
+                            onClick={() => updateStatus(id, "Done")}
                            className="task-editor-footer-icon-button"
                         >
                             <BiSolidArchive />
