@@ -7,7 +7,7 @@ export interface OneTask {
   id?: number | undefined;
 }
 
-export function OneTaskElement(props: OneTask): JSX.Element {
+export function OneTaskElement(props: OneTask) {
   return (
     <>
       <div className="oneTask">

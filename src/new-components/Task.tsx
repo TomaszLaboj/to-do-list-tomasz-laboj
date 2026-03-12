@@ -1,6 +1,4 @@
-import {useEffect, useRef, useState} from "react";
 import { BiTrash } from "react-icons/bi";
-
 
 interface TaskInterface {
     id: number | undefined;
@@ -19,35 +17,20 @@ const Task = ({
         dateAdded,
         dueDate,
         status,
-    deleteTask,
-          }: TaskInterface) => {
-    const [expanded, setExpanded] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const descriptionRef = useRef<HTMLTextAreaElement>(null);
-
-    useEffect(() => {
-        if (expanded) {
-            descriptionRef.current?.focus();
-        }
-    }, [expanded]);
-
-    const autoResize = (e: React.FormEvent<HTMLTextAreaElement>)=> {
-        const el = e.currentTarget;
-        el.style.height = "0px";
-        el.style.height = el.scrollHeight + "px";
-    }
+        deleteTask,
+}: TaskInterface) => {
 
     return (
         <div className='task'>
             <div
-                id="title-input"
-                className="title-input"
+                id="task-title"
+                className="task-title"
             >
                 {title}
             </div>
             <div
-                id="description-input"
-                className="description-input"
+                id="task-description"
+                className="task-description"
             >
             {description}
             </div>
