@@ -100,17 +100,23 @@ body {
 
 .task-footer-date {
   display: inline-block;
+  font-size: x-small;
+  font-weight: lighter;
 }
-
-.task-footer-bin-icon {
-  display: inline-block;
-  float: right;
-}
-
 
 .task-footer-bin-icon-button {
+  width: 2.6rem;
+  height: 2rem;
+  display: inline-block;
+  float: right;
   background: none;
   border: none;
+  font-size: larger;
+}
+
+.task-footer-bin-icon-button:hover {
+  background: #daddd8;
+  border-radius: 8px;
 }
 
 .background {
@@ -141,15 +147,24 @@ body {
 }
 
 .task-editor-title {
-  width: 100%;
-
+  width: 70%;
   border: none;
   outline: none;
   resize: none;
-
+  display: inline-block;
   font-family: inherit;
   font-weight: bold;
+  word-wrap: break-word;
   background: transparent;
+}
+
+.task-editor-date-added {
+  font-weight: lighter;
+  font-size: x-small;
+  display: inline-block;
+  float: right;
+  background: transparent;
+  border: none;
 }
 
 .task-editor-description {
@@ -174,12 +189,7 @@ body {
   display: inline-block;
   float: right;
 }
-.date-added {
-  display: inline-block;
-  float: right;
-  background: transparent;
-  border: none;
-}
+
 
 .oneTask {
   display: inline-flex;

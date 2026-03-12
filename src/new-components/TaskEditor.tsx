@@ -76,7 +76,7 @@ const TaskEditor = ({
                         onInput={autoResize}
                         onChange={(e) => updateTitle(e.target.value)}
                     />
-                    <div className="date-added">{new Date(dateAdded).toLocaleDateString()}</div>
+                    <div className="task-editor-date-added">Date added: {new Date(dateAdded).toLocaleDateString()}</div>
                 </span>
                 <textarea
                     value={description}

@@ -22,33 +22,31 @@ const Task = ({
 
     return (
         <div className='task'>
-            <div
+            <h4
                 id="task-title"
                 className="task-title"
             >
                 {title}
-            </div>
-            <div
+            </h4>
+            <p
                 id="task-description"
                 className="task-description"
             >
             {description}
-            </div>
+            </p>
             <span className="task-footer">
                 <div className="task-footer-date">
                    {dueDate && 'Due date: ' + dueDate}
                 </div>
-                <div className="task-footer-bin-icon">
-                    <button
-                        className="task-footer-bin-icon-button"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            deleteTask(id);
-                        }}
-                    >
-                        <BiTrash />
-                    </button>
-                </div>
+                <button
+                    className="task-footer-bin-icon-button"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        deleteTask(id);
+                    }}
+                >
+                    <BiTrash />
+                </button>
             </span>
         </div>
 
