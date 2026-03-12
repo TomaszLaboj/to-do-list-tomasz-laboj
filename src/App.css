@@ -62,35 +62,6 @@ body {
   color: #A9A9A9;
 }
 
-.background {
-  position:fixed;
-  top:0;
-  left:0;
-  width:100vw;
-  height:100vh;
-  background-color:rgba(0,0,0,0.4);
-  display:flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.task-editor {
-  margin: auto;
-  padding: 12px 16px;
-  background-color: #FCFCFC;
-  border: 1px solid #dadce0;
-  border-radius: 8px;
-
-  width: 600px;
-  max-width: 90%;
-
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-
-
-}
-
 .todo-list {
   display: flex;
   flex-wrap: wrap;
@@ -135,13 +106,66 @@ body {
   display: inline-block;
   float: right;
 }
-.task-editor-footer-bin-icon-button {
-  margin-top: 5px;
+
+
+.task-footer-bin-icon-button {
   background: none;
   border: none;
 }
 
-.task-footer-bin-icon-button {
+.background {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  background-color:rgba(0,0,0,0.4);
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.task-editor {
+  margin: auto;
+  padding: 12px 16px;
+  background-color: #FCFCFC;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+
+  width: 600px;
+  max-width: 90%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-editor-title {
+  width: 100%;
+
+  border: none;
+  outline: none;
+  resize: none;
+
+  font-family: inherit;
+  font-weight: bold;
+  background: transparent;
+}
+
+.task-editor-description {
+  width: 100%;
+
+  border: none;
+  outline: none;
+  resize: none;
+
+  font-family: inherit;
+  background: transparent;
+  height: fit-content;
+}
+
+.task-editor-footer-bin-icon-button {
+  margin-top: 5px;
   background: none;
   border: none;
 }

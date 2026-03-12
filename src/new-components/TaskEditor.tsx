@@ -34,6 +34,12 @@ const TaskEditor = ({
     const taskEditorRef = useRef<HTMLDivElement>(null);
     const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
+    const autoResize = (e: SyntheticEvent<HTMLTextAreaElement>)=> {
+        const el = e.currentTarget;
+        el.style.height = "0px";
+        el.style.height = el.scrollHeight + "px";
+    }
+
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (!taskEditorRef.current?.contains(e.target as Node)) {
@@ -41,17 +47,15 @@ const TaskEditor = ({
             }
         }
         document.addEventListener("mousedown", handleClickOutside);
+        if (descriptionRef.current) {
+            descriptionRef.current.style.height = "0px";
+            descriptionRef.current.style.height = descriptionRef.current.scrollHeight + "px";
+        }
+
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         }
     }, [title, id, description, dateAdded, dueDate, status, closeAndUpdate]);
-
-
-    const autoResize = (e: SyntheticEvent<HTMLTextAreaElement>)=> {
-        const el = e.currentTarget;
-        el.style.height = "0px";
-        el.style.height = el.scrollHeight + "px";
-    }
 
     return (
         <div
@@ -65,8 +69,8 @@ const TaskEditor = ({
                 <span>
                     <textarea
                         value={title}
-                        id="title-input"
-                        className="title-input"
+                        id="task-editor-title"
+                        className="task-editor-title"
                         placeholder="Title"
                         rows={1}
                         onInput={autoResize}
@@ -77,9 +81,8 @@ const TaskEditor = ({
                 <textarea
                     value={description}
                     ref={descriptionRef}
-                    id="description-input"
-                    className="description-input"
-                    placeholder="Take a note..."
+                    id="task-editor-description"
+                    className="task-editor-description"
                     rows={1}
                     onInput={autoResize}
                     onChange={(e) => updateDescription(e.target.value)}
