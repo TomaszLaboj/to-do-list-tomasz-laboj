@@ -100,7 +100,7 @@ body {
 
 .task-footer-date {
   display: inline-block;
-  font-size: x-small;
+  font-size: small;
   font-weight: lighter;
 }
 
@@ -179,10 +179,14 @@ body {
   height: fit-content;
 }
 
-.task-editor-footer-bin-icon-button {
+.task-editor-footer-icon-button {
   margin-top: 5px;
   background: none;
   border: none;
+}
+.task-editor-footer-icon-button:hover {
+  background: #daddd8;
+  border-radius: 8px;
 }
 
 .task-editor-footer-bin-and-close-buttons {

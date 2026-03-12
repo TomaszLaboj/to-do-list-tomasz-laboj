@@ -64,14 +64,14 @@ const TasksList = ({
         })
     };
 
-    const handleUpdateStatus = (value: string) => {
+    const handleUpdateStatus = (taskId: number | undefined, status: string) => {
         setEdited(true);
         setHighlightedTask((prev) => {
             if (prev) {
                 return (
                     {
                         ...prev,
-                        status: value
+                        status: status
                     }
                 )}
         })
@@ -111,6 +111,7 @@ const TasksList = ({
                             dueDate={task.due_date && new Date(task.due_date).toLocaleDateString()}
                             status={task.status}
                             deleteTask={deleteTask}
+                            updateStatus={handleUpdateStatus}
                         />
                     </div>
                 );

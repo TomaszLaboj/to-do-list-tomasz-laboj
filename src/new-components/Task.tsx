@@ -1,4 +1,4 @@
-import { BiTrash } from "react-icons/bi";
+import { BiTrash, BiSolidArchive } from "react-icons/bi";
 
 interface TaskInterface {
     id: number | undefined;
@@ -8,6 +8,7 @@ interface TaskInterface {
     dueDate: string | undefined;
     status: string;
     deleteTask: (taskId: number | undefined) => void;
+    updateStatus: (taskId: number | undefined, status: string) => void;
 }
 
 const Task = ({
@@ -32,7 +33,7 @@ const Task = ({
                 id="task-description"
                 className="task-description"
             >
-            {description}
+                {description}
             </p>
             <span className="task-footer">
                 <div className="task-footer-date">
@@ -46,6 +47,15 @@ const Task = ({
                     }}
                 >
                     <BiTrash />
+                </button>
+                <button
+                    className="task-footer-bin-icon-button"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        deleteTask(id);
+                    }}
+                >
+                    <BiSolidArchive />
                 </button>
             </span>
         </div>

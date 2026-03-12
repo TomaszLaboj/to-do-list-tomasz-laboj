@@ -7,11 +7,12 @@ import {
 import "./App.css";
 import axios from "axios";
 import AddNewTask from "./new-components/AddNewTask";
-import { TasksMarkedAsDone } from "./components/TasksMarkedAsDone";
+import { TasksMarkedAsDoneOld } from "./components/TasksMarkedAsDoneOld";
 import { Footer } from "./components/Footer";
 import Header from "./new-components/Header";
 import { url } from './utils/utils'
 import TasksList from "./new-components/TasksList";
+import ArchivedTasks from "./new-components/ArchivedTasks";
 
 export type TitleAndDescription = {
     title: string;
@@ -125,9 +126,9 @@ function App() {
             updateTask={handleUpdateTask}
             deleteTask={handleDeleteTask}
         />
-        <TasksMarkedAsDone
-            listOfTasksMarkedAsDone={archivedTasks(listOfTasks)}
-            handleDeleteTask={handleDeleteTask}
+         <br/>
+        <ArchivedTasks
+          listOfArchivedTasks={archivedTasks(listOfTasks)}
         />
         <Footer />
     </>

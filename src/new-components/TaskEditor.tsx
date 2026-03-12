@@ -1,5 +1,5 @@
 import {FormEvent, SyntheticEvent, useEffect, useRef, useState} from "react";
-import { BiTrash } from "react-icons/bi";
+import { BiTrash, BiSolidArchive } from "react-icons/bi";
 
 
 interface TaskEditorInterface {
@@ -12,7 +12,7 @@ interface TaskEditorInterface {
     updateTitle: (title: string) => void;
     updateDescription: (description: string) => void;
     updateDueDate: (dueDate: string) => void;
-    updateStatus: (status: string) => void;
+    updateStatus: (taskId: number | undefined, status: string) => void;
     closeAndUpdate: () => void;
     deleteTask: (taskId: number | undefined) => void;
 }
@@ -33,6 +33,7 @@ const TaskEditor = ({
               }: TaskEditorInterface) => {
     const taskEditorRef = useRef<HTMLDivElement>(null);
     const descriptionRef = useRef<HTMLTextAreaElement>(null);
+    const titleRef = useRef<HTMLTextAreaElement>(null);
 
     const autoResize = (e: SyntheticEvent<HTMLTextAreaElement>)=> {
         const el = e.currentTarget;
@@ -47,6 +48,10 @@ const TaskEditor = ({
             }
         }
         document.addEventListener("mousedown", handleClickOutside);
+        if (titleRef.current) {
+            titleRef.current.style.height = "0px";
+            titleRef.current.style.height = titleRef.current.scrollHeight + "px";
+        }
         if (descriptionRef.current) {
             descriptionRef.current.style.height = "0px";
             descriptionRef.current.style.height = descriptionRef.current.scrollHeight + "px";
@@ -56,7 +61,7 @@ const TaskEditor = ({
             document.removeEventListener("mousedown", handleClickOutside);
         }
     }, [title, id, description, dateAdded, dueDate, status, closeAndUpdate]);
-
+    console.log(dueDate)
     return (
         <div
 
@@ -69,6 +74,7 @@ const TaskEditor = ({
                 <span>
                     <textarea
                         value={title}
+                        ref={titleRef}
                         id="task-editor-title"
                         className="task-editor-title"
                         placeholder="Title"
@@ -90,14 +96,19 @@ const TaskEditor = ({
                 <span>
                     <input
                         type="date"
-                        value={dueDate ? dueDate : ''}
-                        placeholder={dueDate}
+                        value={dueDate}
+                        // placeholder={"2026-03-20"}
                         onChange={(e) => updateDueDate(e.target.value)}
                     />
                     <span className="task-editor-footer-bin-and-close-buttons">
                         <button
+                           className="task-editor-footer-icon-button"
+                        >
+                            <BiSolidArchive />
+                        </button>
+                        <button
                             onClick={() => deleteTask(id)}
-                            className="task-editor-footer-bin-icon-button"
+                            className="task-editor-footer-icon-button"
                         >
                             <BiTrash />
                         </button>
