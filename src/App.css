@@ -80,6 +80,29 @@ body {
   border-radius: 8px;
 }
 
+.archive-button-tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.archive-button-tooltip-text {
+visibility: hidden; 
+  width: 130px;
+  background-color: black;
+  color: #ffffff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+}
+
+.archive-button-tooltip:hover .archive-button-tooltip-text {
+  visibility: visible;
+}
+
+
 .task {
   margin: 4px;
   padding: 12px 16px;

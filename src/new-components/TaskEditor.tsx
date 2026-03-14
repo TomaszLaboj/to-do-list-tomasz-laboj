@@ -104,16 +104,24 @@ const TaskEditor = ({
                         onChange={(e) => updateDueDate(e.target.value)}
                     />
                     <span className="task-editor-footer-bin-and-close-buttons">
-                        <button
-                            onClick={() => updateStatus(id, statusInProgress ? "Done" : "In progress")}
-                           className="task-editor-footer-icon-button"
-                        >
-                            {statusInProgress ? 
-                                <BiArchiveIn />
-                                : <BiArchiveOut />
-                            }
-                            
-                        </button>
+                        <div className="archive-button-tooltip">
+                            <button
+                                onClick={() => updateStatus(id, statusInProgress ? "Done" : "In progress")}
+                            className="task-editor-footer-icon-button"
+                            >
+                                {statusInProgress ? 
+                                    <BiArchiveIn />
+                                    : <BiArchiveOut />
+                                }
+                                
+                            </button>
+                            <span className="archive-button-tooltip-text">
+                               {statusInProgress ? 
+                                    "Archive"
+                                    : "Unarchive"
+                                }
+                                </span>
+                        </div>
                         <button
                             onClick={() => deleteTask(id)}
                             className="task-editor-footer-icon-button"
