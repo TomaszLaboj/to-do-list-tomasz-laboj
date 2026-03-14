@@ -15,8 +15,8 @@ import TasksList from "./new-components/TasksList";
 import ArchivedTasks from "./new-components/ArchivedTasks";
 
 export type TitleAndDescription = {
-    title: string;
-    description: string;
+  title: string;
+  description: string;
 }
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
   const [listOfTasks, setListOfTasks] = useState<OneTask[]>([]);
   const [titleAndDescription, setTitleAndDescription] = useState<TitleAndDescription>({ title: '', description: ''});
   const [dueDate, setDueDate] = useState<string>('');
-
+  const [showArchived, setShowArchive] = useState(false);
   const getTasksList = () => {
       axios
         .get(`${url}/todos/`)
@@ -131,12 +131,21 @@ function App() {
             updateStatus={handleUpdateStatus}
         />
          <hr/>
-        <TasksList
-            listOfTasks={archivedTasks(listOfTasks)}
-            updateTask={handleUpdateTask}
-            deleteTask={handleDeleteTask}
-            updateStatus={handleUpdateStatus}
-        />
+         <button
+            className="archived-button"
+            onClick={() => setShowArchive(!showArchived)}
+          >
+            Show archived
+          </button>
+          
+         {showArchived && 
+          <TasksList
+              listOfTasks={archivedTasks(listOfTasks)}
+              updateTask={handleUpdateTask}
+              deleteTask={handleDeleteTask}
+              updateStatus={handleUpdateStatus}
+          />
+        }
         <Footer />
     </>
   );

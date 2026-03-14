@@ -69,6 +69,17 @@ body {
   gap: 2px;
 }
 
+.archived-button {
+  border: none;
+  background: none;
+  font-weight: bold;
+}
+
+.archived-button:hover {
+  background: #daddd8;
+  border-radius: 8px;
+}
+
 .task {
   margin: 4px;
   padding: 12px 16px;
