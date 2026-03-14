@@ -21,7 +21,6 @@ const Task = ({
         deleteTask,
         updateStatus,
 }: TaskInterface) => {
-    console.log(status)
     return (
         <div className='task'>
             <h4
