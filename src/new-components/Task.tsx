@@ -8,7 +8,7 @@ interface TaskInterface {
     dueDate: string | undefined;
     status: string;
     deleteTask: (taskId: number | undefined) => void;
-    updateStatus: (taskId: number | undefined) => void;
+    updateStatus: (taskId: number | undefined, status: "In progress" | "Done") => void;
 }
 
 const Task = ({
@@ -21,7 +21,7 @@ const Task = ({
         deleteTask,
         updateStatus,
 }: TaskInterface) => {
-
+    console.log(status)
     return (
         <div className='task'>
             <h4
@@ -45,7 +45,7 @@ const Task = ({
                     className="task-footer-archive-icon-button"
                     onClick={(e) => {
                         e.stopPropagation();
-                        updateStatus(id);
+                        updateStatus(id, status === "In progress" ? "Done" : "In progress");
                     }}
                 >
                     <BiSolidArchive />

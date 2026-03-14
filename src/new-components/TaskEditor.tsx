@@ -12,7 +12,7 @@ interface TaskEditorInterface {
     updateTitle: (title: string) => void;
     updateDescription: (description: string) => void;
     updateDueDate: (dueDate: string) => void;
-    updateStatus: (taskId: number | undefined, status: string) => void;
+    updateStatus: (taskId: number | undefined, status: "In progress" | "Done") => void;
     closeAndUpdate: () => void;
     deleteTask: (taskId: number | undefined) => void;
 }
@@ -104,7 +104,7 @@ const TaskEditor = ({
                     />
                     <span className="task-editor-footer-bin-and-close-buttons">
                         <button
-                            onClick={() => updateStatus(id, "Done")}
+                            onClick={() => updateStatus(id, status === "In progress" ? "Done" : "In progress")}
                            className="task-editor-footer-icon-button"
                         >
                             <BiSolidArchive />

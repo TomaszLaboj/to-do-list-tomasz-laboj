@@ -63,7 +63,7 @@ function App() {
     }
   };
 
-  const handleMarkAsDone = (taskId: number | undefined) => { // to do : refactor , to send just id and update in the back end
+  const handleUpdateStatus = (taskId: number | undefined, status: "In progress" | "Done") => { // to do : refactor , to send just id and update in the back end
     
     const task = listOfTasks.find((task) => task.id === taskId)
     console.log(task)
@@ -71,7 +71,7 @@ function App() {
       axios
         .put(`${url}/todos/${task.id}`, {
           ...task,
-          status: "Done"
+          status: status
         })
         .then(() => getTasksList());
     }
@@ -128,11 +128,14 @@ function App() {
             listOfTasks={activeTasks(listOfTasks)}
             updateTask={handleUpdateTask}
             deleteTask={handleDeleteTask}
-            updateStatus={handleMarkAsDone}
+            updateStatus={handleUpdateStatus}
         />
-         <br/>
-        <ArchivedTasks
-          listOfArchivedTasks={archivedTasks(listOfTasks)}
+         <hr/>
+        <TasksList
+            listOfTasks={archivedTasks(listOfTasks)}
+            updateTask={handleUpdateTask}
+            deleteTask={handleDeleteTask}
+            updateStatus={handleUpdateStatus}
         />
         <Footer />
     </>

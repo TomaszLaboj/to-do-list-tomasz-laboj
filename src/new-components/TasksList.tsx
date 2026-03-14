@@ -8,7 +8,7 @@ interface ListOfTasksProps {
     listOfTasks: OneTask[];
     updateTask: (task: OneTask) => void;
     deleteTask: (taskId: number | undefined) => void;
-    updateStatus: (taskId: number | undefined) => void
+    updateStatus: (taskId: number | undefined, status: "In progress" | "Done") => void
 }
 
 const TasksList = ({
@@ -66,15 +66,17 @@ const TasksList = ({
         })
     };
 
-    const handleArchive = (taskId: number | undefined) => {
+    const updateTaskStatus = (taskId: number | undefined, status: "In progress" | "Done") => {
         console.log(taskId)
-        updateStatus(taskId);
+        updateStatus(taskId, status);
         if (highlightedTask) {
             setHighlightedTask(undefined);
             setHighlightedTaskOriginal(undefined);
         } 
         if (edited) setEdited(false);
     };
+
+
 
     const handleDeleteTask = (taskId: number | undefined) => {
         deleteTask(taskId);
@@ -110,7 +112,7 @@ const TasksList = ({
                                 dueDate={task.due_date && new Date(task.due_date).toLocaleDateString()}
                                 status={task.status}
                                 deleteTask={deleteTask}
-                                updateStatus={handleArchive}
+                                updateStatus={updateTaskStatus}
                             />
                         </div>
                     );
@@ -126,7 +128,7 @@ const TasksList = ({
                         status={highlightedTask?.status}
                         updateTitle={handleUpdateTitle}
                         updateDescription={handleUpdateDescription}
-                        updateStatus={handleArchive}
+                        updateStatus={updateTaskStatus}
                         updateDueDate={handleUpdateDueDate}
                         closeAndUpdate={handleCloseAndUpdate}
                         deleteTask={handleDeleteTask}
