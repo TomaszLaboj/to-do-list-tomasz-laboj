@@ -1,4 +1,4 @@
-import { BiTrash, BiSolidArchive } from "react-icons/bi";
+import { BiTrash, BiArchiveIn, BiArchiveOut } from "react-icons/bi";
 
 interface TaskInterface {
     id: number | undefined;
@@ -21,6 +21,8 @@ const Task = ({
         deleteTask,
         updateStatus,
 }: TaskInterface) => {
+    const statusInProgress = status === "In progress";
+
     return (
         <div className='task'>
             <h4
@@ -44,10 +46,13 @@ const Task = ({
                     className="task-footer-archive-icon-button"
                     onClick={(e) => {
                         e.stopPropagation();
-                        updateStatus(id, status === "In progress" ? "Done" : "In progress");
+                        updateStatus(id, statusInProgress ? "Done" : "In progress");
                     }}
                 >
-                    <BiSolidArchive />
+                    {statusInProgress ? 
+                        <BiArchiveIn />
+                        : <BiArchiveOut />
+                    }
                 </button>
                 <button
                     className="task-footer-bin-icon-button"

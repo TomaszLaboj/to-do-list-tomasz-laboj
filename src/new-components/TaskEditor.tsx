@@ -1,5 +1,5 @@
 import {FormEvent, SyntheticEvent, useEffect, useRef, useState} from "react";
-import { BiTrash, BiSolidArchive } from "react-icons/bi";
+import { BiTrash, BiArchiveIn, BiArchiveOut } from "react-icons/bi";
 
 
 interface TaskEditorInterface {
@@ -34,6 +34,7 @@ const TaskEditor = ({
     const taskEditorRef = useRef<HTMLDivElement>(null);
     const descriptionRef = useRef<HTMLTextAreaElement>(null);
     const titleRef = useRef<HTMLTextAreaElement>(null);
+    const statusInProgress = status === "In progress";
 
     const autoResize = (e: SyntheticEvent<HTMLTextAreaElement>)=> {
         const el = e.currentTarget;
@@ -104,10 +105,14 @@ const TaskEditor = ({
                     />
                     <span className="task-editor-footer-bin-and-close-buttons">
                         <button
-                            onClick={() => updateStatus(id, status === "In progress" ? "Done" : "In progress")}
+                            onClick={() => updateStatus(id, statusInProgress ? "Done" : "In progress")}
                            className="task-editor-footer-icon-button"
                         >
-                            <BiSolidArchive />
+                            {statusInProgress ? 
+                                <BiArchiveIn />
+                                : <BiArchiveOut />
+                            }
+                            
                         </button>
                         <button
                             onClick={() => deleteTask(id)}
