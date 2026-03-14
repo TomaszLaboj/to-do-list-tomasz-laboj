@@ -7,12 +7,10 @@ import {
 import "./App.css";
 import axios from "axios";
 import AddNewTask from "./new-components/AddNewTask";
-import { TasksMarkedAsDoneOld } from "./components/TasksMarkedAsDoneOld";
 import { Footer } from "./components/Footer";
 import Header from "./new-components/Header";
 import { url } from './utils/utils'
 import TasksList from "./new-components/TasksList";
-import ArchivedTasks from "./new-components/ArchivedTasks";
 
 export type TitleAndDescription = {
   title: string;
@@ -25,7 +23,7 @@ function App() {
   const [titleAndDescription, setTitleAndDescription] = useState<TitleAndDescription>({ title: '', description: ''});
   const [dueDate, setDueDate] = useState<string>('');
   const [showArchived, setShowArchive] = useState(false);
-  const getTasksList = () => {
+    const getTasksList = () => {
       axios
         .get(`${url}/todos/`)
         .then((response) => setListOfTasks(response.data));
@@ -77,7 +75,10 @@ function App() {
     }
 
   };
-
+  const handleDateChange = (date: string) => {
+    setDueDate(date);
+  }
+  
   const handleUpdateTask = (taskToUpdate: OneTask) => {
       const task: OneTask = taskToUpdate.due_date ? {
           id: taskToUpdate.id,
@@ -120,7 +121,7 @@ function App() {
             description={titleAndDescription.description}
             setAddTitle={handleUpdateTitle}
             setAddDescription={handleUpdateDescription}
-            setAddDate={setDueDate}
+            setAddDate={handleDateChange}
             handleAddTask={handleAddTask}
         />
         <br/>

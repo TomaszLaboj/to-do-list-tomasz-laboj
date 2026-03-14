@@ -35,6 +35,7 @@ const AddNewTask = ({
                 if(title||description) {
                     handleAddTask();
                 }
+                setAddDate('')
                 setExpanded(false);
             }
         }
@@ -63,14 +64,14 @@ const AddNewTask = ({
         const el = e.currentTarget;
         el.style.height = "0px";
         el.style.height = el.scrollHeight + "px";
-      console.log('autoresize called')
     }
 
     const handleClickClose = () => {
         if (title || description) handleAddTask();
+        if (dueDate) setAddDate('')
         setExpanded(false);
     }
-
+   
     return (
 
 
@@ -107,7 +108,6 @@ const AddNewTask = ({
                                 className="date-input"
                                 value={dueDate}
                                 placeholder="dd/mm/yyyy"
-
                                 onChange={(event) => {
                                     handleDateChange(event.target.value);
                                 }}

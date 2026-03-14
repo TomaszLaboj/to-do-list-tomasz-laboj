@@ -50,7 +50,6 @@ const TaskEditor = ({
         }
         
         const handleKeyPress = (e: KeyboardEvent) => {
-          console.log(description)
             if (e.key === "Escape") closeAndUpdate();
         }
 
@@ -71,7 +70,7 @@ const TaskEditor = ({
             document.removeEventListener("keydown", handleKeyPress)
         }
     }, [title, id, description, dateAdded, dueDate, status, closeAndUpdate]);
-    console.log(dueDate)
+
     return (
         <div
 
@@ -106,8 +105,7 @@ const TaskEditor = ({
                 <span>
                     <input
                         type="date"
-                        value={dueDate}
-                        // placeholder={"2026-03-20"}
+                        value={dueDate ? dueDate?.split('T')[0] : ''}
                         onChange={(e) => updateDueDate(e.target.value)}
                     />
                     <span className="task-editor-footer-bin-and-close-buttons">
