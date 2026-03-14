@@ -77,7 +77,6 @@ const TasksList = ({
     };
 
 
-
     const handleDeleteTask = (taskId: number | undefined) => {
         deleteTask(taskId);
         setHighlightedTask(undefined);

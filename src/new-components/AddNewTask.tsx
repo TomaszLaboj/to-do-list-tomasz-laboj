@@ -38,10 +38,20 @@ const AddNewTask = ({
                 setExpanded(false);
             }
         }
+        const handleKeyPress = (e: KeyboardEvent) => {
+          console.log(e.key)
+            if (e.key === "Escape") {
+                if(title||description) {
+                    handleAddTask();
+                }
+                setExpanded(false);
+            }
+        }
         document.addEventListener("mousedown", handleClickOutside);
-
+        document.addEventListener("keydown", handleKeyPress)
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("keydown", handleKeyPress)
         }
     }, [title, description])
 
@@ -53,6 +63,7 @@ const AddNewTask = ({
         const el = e.currentTarget;
         el.style.height = "0px";
         el.style.height = el.scrollHeight + "px";
+      console.log('autoresize called')
     }
 
     const handleClickClose = () => {

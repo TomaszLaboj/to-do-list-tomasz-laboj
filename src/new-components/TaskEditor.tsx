@@ -49,7 +49,13 @@ const TaskEditor = ({
             }
         }
         
+        const handleKeyPress = (e: KeyboardEvent) => {
+          console.log(description)
+            if (e.key === "Escape") closeAndUpdate();
+        }
+
         document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("keydown", handleKeyPress)
 
         if (titleRef.current) {
             titleRef.current.style.height = "0px";
@@ -62,6 +68,7 @@ const TaskEditor = ({
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("keydown", handleKeyPress)
         }
     }, [title, id, description, dateAdded, dueDate, status, closeAndUpdate]);
     console.log(dueDate)
@@ -110,10 +117,9 @@ const TaskEditor = ({
                             className="task-editor-footer-icon-button"
                             >
                                 {statusInProgress ? 
-                                    <BiArchiveIn />
-                                    : <BiArchiveOut />
+                                    <BiArchiveIn size='1.2rem'/>
+                                    : <BiArchiveOut size='1.2rem'/>
                                 }
-                                
                             </button>
                             <span className="archive-button-tooltip-text">
                                {statusInProgress ? 
@@ -126,7 +132,7 @@ const TaskEditor = ({
                             onClick={() => deleteTask(id)}
                             className="task-editor-footer-icon-button"
                         >
-                            <BiTrash />
+                            <BiTrash size='1.2rem'/>
                         </button>
                         <button
                             className="close-button"

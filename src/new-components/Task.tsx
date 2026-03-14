@@ -41,36 +41,41 @@ const Task = ({
                 <div className="task-footer-date">
                    {dueDate && 'Due date: ' + dueDate}
                 </div>
-                <div className="task-footer-buttons">
-                <div className="archive-button-tooltip">
-                    <button
-                        className="task-footer-archive-icon-button"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            updateStatus(id, statusInProgress ? "Done" : "In progress");
-                        }}
-                    >
-                        {statusInProgress ? 
-                            <BiArchiveIn />
-                            : <BiArchiveOut />
-                        }
-                    </button>
-                    <span className="archive-button-tooltip-text">
-                        {statusInProgress ? 
-                            "Archive"
-                            : "Unarchive"
-                        }
-                    </span>
-                </div>
-                <button
-                    className="task-footer-bin-icon-button"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        deleteTask(id)
-                    }}
-                >
-                    <BiTrash />
-                </button>
+                <div>
+                    <div className="archive-button-tooltip">
+                        <button
+                            className="task-footer-archive-icon-button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                updateStatus(id, statusInProgress ? "Done" : "In progress");
+                            }}
+                        >
+                            {statusInProgress ? 
+                                <BiArchiveIn />
+                                : <BiArchiveOut />
+                            }
+                        </button>
+                        <span className="archive-button-tooltip-text">
+                            {statusInProgress ? 
+                                "Archive"
+                                : "Unarchive"
+                            }
+                        </span>
+                    </div>
+                    <div className="delete-button-tooltip">
+                        <button
+                            className="task-footer-bin-icon-button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                deleteTask(id)
+                            }}
+                        >
+                            <BiTrash />
+                        </button>
+                        <span className="delete-button-tooltip-text">
+                            Delete note
+                        </span>
+                    </div>
                 </div>
             </span>
         </div>

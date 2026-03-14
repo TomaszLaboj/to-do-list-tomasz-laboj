@@ -12,7 +12,7 @@ body {
 
   width: 600px;
   max-width: 90%;
-
+  max-height: 40rem;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -49,13 +49,12 @@ body {
 }
 
 .close-button {
-  display: inline-block;
-  float: right;
   background: transparent;
   border: none;
   height: 2rem;
   width: 4rem;
   font-weight: bold;
+  float: right;
 }
 
 .collapsed-input {
@@ -80,14 +79,16 @@ body {
   border-radius: 8px;
 }
 
-.archive-button-tooltip {
+.archive-button-tooltip,
+.delete-button-tooltip {
   position: relative;
   display: inline-block;
   cursor: pointer;
 }
 
-.archive-button-tooltip-text {
-visibility: hidden; 
+.archive-button-tooltip-text,
+.delete-button-tooltip-text  {
+  visibility: hidden; 
   width: 130px;
   background-color: black;
   color: #ffffff;
@@ -98,7 +99,9 @@ visibility: hidden;
   z-index: 1;
 }
 
-.archive-button-tooltip:hover .archive-button-tooltip-text {
+
+.archive-button-tooltip:hover .archive-button-tooltip-text,
+.delete-button-tooltip:hover .delete-button-tooltip-text {
   visibility: visible;
 }
 
@@ -129,7 +132,9 @@ visibility: hidden;
 }
 
 .task-footer {
-  display: inline-block;
+  display: flex;
+  align-items: baseline;
+  justify-content: end;
 }
 
 .task-footer-date {
@@ -138,14 +143,9 @@ visibility: hidden;
   font-weight: lighter;
 }
 
-.task-footer-buttons {
-  float: right;
-}
-
 .task-footer-archive-icon-button {
   width: 2.6rem;
   height: 2rem;
-  /* float: right; */
   background: none;
   border: none;
   font-size: larger;
@@ -154,7 +154,6 @@ visibility: hidden;
 .task-footer-bin-icon-button {
   width: 2.6rem;
   height: 2rem;
-  float: right;
   background: none;
   border: none;
   font-size: larger;
@@ -191,6 +190,7 @@ visibility: hidden;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  max-height: 100rem;
 }
 
 .task-editor-title {
@@ -236,7 +236,6 @@ visibility: hidden;
 }
 
 .task-editor-footer-bin-and-close-buttons {
-  display: inline-block;
   float: right;
 }
 
