@@ -96,7 +96,7 @@ const TasksList = ({
 
     return (
         <>
-            <div className="todo-list">
+            <div className="notes-list-container">
                 {listOfTasks.map((task: OneTask) => {
                     return (
                             <div

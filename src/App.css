@@ -61,7 +61,7 @@ body {
   color: #A9A9A9;
 }
 
-.todo-list {
+.notes-list-container {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
