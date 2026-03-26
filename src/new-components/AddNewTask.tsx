@@ -54,7 +54,7 @@ const AddNewTask = ({
             document.removeEventListener("mousedown", handleClickOutside);
             document.removeEventListener("keydown", handleKeyPress)
         }
-    }, [title, description])
+    }, [title, description, setAddDate, handleAddTask]);
 
     const handleDateChange = (date: string) => {
         setAddDate(date);
