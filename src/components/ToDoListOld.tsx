@@ -31,7 +31,9 @@ export function ToDoListOld({
               title={task.title}
               description={task.description}
               date_added={new Date(task.date_added).toLocaleDateString()}
-              due_date={task.due_date && new Date(task.due_date).toLocaleDateString()}
+              due_date={
+                task.due_date && new Date(task.due_date).toLocaleDateString()
+              }
               status={task.status}
             />
           </div>

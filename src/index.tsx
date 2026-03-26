@@ -8,9 +8,9 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-    <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </IconContext.Provider>
+  <IconContext.Provider value={{ style: { verticalAlign: "middle" } }}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </IconContext.Provider>
 );

@@ -16,12 +16,15 @@ export function TasksMarkedAsDoneOld({
         {listOfTasksMarkedAsDone.map((task) => {
           return (
             <div key={task.id}>
-              <button className="button" onClick={() => handleDeleteTask(task.id)}>
+              <button
+                className="button"
+                onClick={() => handleDeleteTask(task.id)}
+              >
                 Delete task
               </button>
 
               <OneTaskElement
-                  title={task.title}
+                title={task.title}
                 description={task.description}
                 date_added={task.date_added}
                 due_date={task.due_date}

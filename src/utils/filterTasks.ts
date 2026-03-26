@@ -15,7 +15,7 @@ export function archivedTasks(listOfTasks: OneTask[]): OneTask[] {
 
 export function activeTasks(listOfTasks: OneTask[]): OneTask[] {
   const listOfTasksInProgress = listOfTasks.filter(
-      (task) => task.status !== "Done"
+    (task) => task.status !== "Done"
   );
   return listOfTasksInProgress;
 }
