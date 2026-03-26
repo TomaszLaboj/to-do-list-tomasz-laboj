@@ -11,7 +11,7 @@ interface AddNewTaskInterface {
   handleAddTask: () => void;
 }
 
-export function AddNewTask({
+export function AddNewTaskOld({
   addDescription,
   addDate,
   setAddDescription,
@@ -22,7 +22,7 @@ export function AddNewTask({
     setAddDate(formatDateToDayMonthYear(date));
   };
   return (
-    <div className="input">
+    <div className="input-container">
       <div>
         <p>Task description: </p>
         <input

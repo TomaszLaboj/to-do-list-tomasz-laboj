@@ -1,14 +1,14 @@
 import { OneTask, OneTaskElement } from "./oneTask";
 
-interface TasksMarkedAsDoneProps {
+interface TasksMarkedAsDoneOldProps {
   listOfTasksMarkedAsDone: OneTask[];
-  handleDeleteTask: (task: OneTask) => void;
+  handleDeleteTask: (taskId: number | undefined) => void;
 }
 
-export function TasksMarkedAsDone({
+export function TasksMarkedAsDoneOld({
   listOfTasksMarkedAsDone,
   handleDeleteTask,
-}: TasksMarkedAsDoneProps) {
+}: TasksMarkedAsDoneOldProps) {
   return (
     <>
       <div className="table">
@@ -16,11 +16,15 @@ export function TasksMarkedAsDone({
         {listOfTasksMarkedAsDone.map((task) => {
           return (
             <div key={task.id}>
-              <button className="button" onClick={() => handleDeleteTask(task)}>
+              <button
+                className="button"
+                onClick={() => handleDeleteTask(task.id)}
+              >
                 Delete task
               </button>
 
               <OneTaskElement
+                title={task.title}
                 description={task.description}
                 date_added={task.date_added}
                 due_date={task.due_date}

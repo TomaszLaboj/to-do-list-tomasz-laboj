@@ -1,109 +1,155 @@
 import { OneTask } from "./components/oneTask";
 import { useState, useEffect } from "react";
-import {
-  filterTasksAsDone,
-  filterTasksAsInprogress,
-} from "./utils/filterTasks";
+import { archivedTasks, activeTasks } from "./utils/filterTasks";
 import "./App.css";
 import axios from "axios";
-import { Instructions } from "./components/Instructions";
-import { AddNewTask } from "./components/AddNewTask";
-import { ToDoList } from "./components/ToDoList";
-import { TasksMarkedAsDone } from "./components/TasksMarkedAsDone";
+import AddNewTask from "./new-components/AddNewTask";
 import { Footer } from "./components/Footer";
-import { formatDateToDayMonthYear } from "./utils/dateFormatter";
+import Header from "./new-components/Header";
+import { url } from "./utils/utils";
+import TasksList from "./new-components/TasksList";
 
-function App(): JSX.Element {
+export type TitleAndDescription = {
+  title: string;
+  description: string;
+};
+
+function App() {
   const today = new Date().toISOString().substring(0, 10);
   const [listOfTasks, setListOfTasks] = useState<OneTask[]>([]);
-  const [addDescription, setAddDescription] = useState<string>("");
-  const [addDate, setAddDate] = useState<string>("12/05/2024");
-
-  useEffect(() => {
-    function getListOfTasks() {
-      axios
-        .get("https://to-do-back-end-app.onrender.com/todos/")
-        .then((response) => setListOfTasks(response.data));
-    }
-    getListOfTasks();
-  }, []);
-
-  const listOfTasksInProgress: OneTask[] = filterTasksAsInprogress(listOfTasks);
-  const listOfTasksMarkedAsDone: OneTask[] = filterTasksAsDone(listOfTasks);
-
+  const [titleAndDescription, setTitleAndDescription] =
+    useState<TitleAndDescription>({ title: "", description: "" });
+  const [dueDate, setDueDate] = useState<string>("");
+  const [showArchived, setShowArchive] = useState(false);
   const getTasksList = () => {
     axios
-      .get("https://to-do-back-end-app.onrender.com/todos/")
+      .get(`${url}/todos/`)
       .then((response) => setListOfTasks(response.data));
   };
 
+  useEffect(() => {
+    getTasksList();
+  }, []);
+
   const handleAddTask = () => {
-    const itemToPost: OneTask = {
-      description: addDescription,
-      date_added: formatDateToDayMonthYear(today),
-      due_date: addDate,
-      status: "In progress",
-    };
+    const task: OneTask = dueDate
+      ? {
+          title: titleAndDescription.title,
+          description: titleAndDescription.description,
+          date_added: today,
+          due_date: dueDate,
+          status: "In progress",
+        }
+      : {
+          title: titleAndDescription.title,
+          description: titleAndDescription.description,
+          date_added: today,
+          status: "In progress",
+        };
     axios
-      .post("https://to-do-back-end-app.onrender.com/todos/", itemToPost)
-
-      .then(() => setAddDate(today))
-      .then(() => setAddDescription(""))
+      .post(`${url}/todos/`, task)
+      .then(() => setDueDate(""))
+      .then(() => setTitleAndDescription({ title: "", description: "" }))
       .then(() => getTasksList());
   };
 
-  const handleDeleteTask = (task: OneTask) => {
-    axios
-      .delete(`https://to-do-back-end-app.onrender.com/todos/${task.id}`)
-      .then(() => getTasksList());
+  const handleDeleteTask = (taskId: number | undefined) => {
+    if (taskId) {
+      axios.delete(`${url}/todos/${taskId}`).then(() => getTasksList());
+    }
   };
 
-  const handleMarkAsDone = (taskToUpdate: OneTask) => {
-    axios
+  const handleUpdateStatus = (
+    taskId: number | undefined,
+    status: "In progress" | "Done"
+  ) => {
+    // to do : refactor , to send just id and update in the back end
 
-      .put(`https://to-do-back-end-app.onrender.com/todos/${taskToUpdate.id}`, {
-        description: taskToUpdate.description,
-        date_added: taskToUpdate.date_added,
-        due_date: taskToUpdate.due_date,
-        status: "Done",
-      })
-      .then(() => getTasksList());
+    const task = listOfTasks.find((task) => task.id === taskId);
+    console.log(task);
+    if (task) {
+      axios
+        .put(`${url}/todos/${task.id}`, {
+          ...task,
+          status: status,
+        })
+        .then(() => getTasksList());
+    }
+  };
+  const handleDateChange = (date: string) => {
+    setDueDate(date);
   };
 
   const handleUpdateTask = (taskToUpdate: OneTask) => {
+    const task: OneTask = taskToUpdate.due_date
+      ? {
+          id: taskToUpdate.id,
+          title: taskToUpdate.title,
+          description: taskToUpdate.description,
+          date_added: taskToUpdate.date_added,
+          due_date: taskToUpdate.due_date,
+          status: taskToUpdate.status,
+        }
+      : {
+          id: taskToUpdate.id,
+          title: taskToUpdate.title,
+          description: taskToUpdate.description,
+          date_added: taskToUpdate.date_added,
+          status: taskToUpdate.status,
+        };
     axios
-
-      .put(`https://to-do-back-end-app.onrender.com/todos/${taskToUpdate.id}`, {
-        description: addDescription,
-        date_added: taskToUpdate.date_added,
-        due_date: addDate,
-        status: taskToUpdate.status,
-      })
-      .then(() => setAddDescription(""))
+      .put(`${url}/todos/${task.id}`, task)
+      .then(() => setTitleAndDescription({ title: "", description: "" }))
       .then(() => getTasksList());
+  };
+
+  const handleUpdateTitle = (value: string) => {
+    setTitleAndDescription((prev) => {
+      return { ...prev, title: value };
+    });
+  };
+
+  const handleUpdateDescription = (value: string) => {
+    setTitleAndDescription((prev) => {
+      return { ...prev, description: value };
+    });
   };
 
   return (
     <>
-      <Instructions />
+      <Header />
       <AddNewTask
-        addDate={addDate}
-        addDescription={addDescription}
-        setAddDescription={setAddDescription}
-        setAddDate={setAddDate}
+        dueDate={dueDate}
+        title={titleAndDescription.title}
+        description={titleAndDescription.description}
+        setAddTitle={handleUpdateTitle}
+        setAddDescription={handleUpdateDescription}
+        setAddDate={handleDateChange}
         handleAddTask={handleAddTask}
       />
+      <br />
+      <TasksList
+        listOfTasks={activeTasks(listOfTasks)}
+        updateTask={handleUpdateTask}
+        deleteTask={handleDeleteTask}
+        updateStatus={handleUpdateStatus}
+      />
+      <hr />
+      <button
+        className="archived-button"
+        onClick={() => setShowArchive(!showArchived)}
+      >
+        Show archived
+      </button>
 
-      <ToDoList
-        listOfTasks={listOfTasksInProgress}
-        handleDeleteTask={handleDeleteTask}
-        handleMarkAsDone={handleMarkAsDone}
-        handleUpdateTask={handleUpdateTask}
-      />
-      <TasksMarkedAsDone
-        listOfTasksMarkedAsDone={listOfTasksMarkedAsDone}
-        handleDeleteTask={handleDeleteTask}
-      />
+      {showArchived && (
+        <TasksList
+          listOfTasks={archivedTasks(listOfTasks)}
+          updateTask={handleUpdateTask}
+          deleteTask={handleDeleteTask}
+          updateStatus={handleUpdateStatus}
+        />
+      )}
       <Footer />
     </>
   );

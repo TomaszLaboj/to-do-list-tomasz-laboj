@@ -6,7 +6,8 @@ interface ToDoListInterface {
   handleDeleteTask: (task: OneTask) => void;
   handleUpdateTask: (task: OneTask) => void;
 }
-export function ToDoList({
+
+export function ToDoListOld({
   listOfTasks,
   handleMarkAsDone,
   handleDeleteTask,
@@ -27,9 +28,12 @@ export function ToDoList({
               Update task
             </button>
             <OneTaskElement
+              title={task.title}
               description={task.description}
-              date_added={task.date_added}
-              due_date={task.due_date}
+              date_added={new Date(task.date_added).toLocaleDateString()}
+              due_date={
+                task.due_date && new Date(task.due_date).toLocaleDateString()
+              }
               status={task.status}
             />
           </div>
