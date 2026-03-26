@@ -134,7 +134,7 @@ body {
 .task-footer {
   display: flex;
   align-items: baseline;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .task-footer-date {
