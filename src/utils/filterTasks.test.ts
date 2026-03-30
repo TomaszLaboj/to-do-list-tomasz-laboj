@@ -1,4 +1,4 @@
-import { filterTasksAsInprogress, archivedTasks } from "./filterTasks";
+import { filterTasksAsInprogress, returnArchivedTasks } from "./filterTasks";
 
 test("filters tasks to show only in progress", () => {
   expect(
@@ -31,7 +31,7 @@ test("filters tasks to show only in progress", () => {
 
 test("filters tasks to show only done", () => {
   expect(
-    archivedTasks([
+    returnArchivedTasks([
       {
         title: "new task",
         description: "new taks",
