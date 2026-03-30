@@ -1,6 +1,6 @@
 import { OneTask } from "./components/oneTask";
 import { useState, useEffect } from "react";
-import { archivedTasks, activeTasks } from "./utils/filterTasks";
+import { returnArchivedTasks, returnActiveTasks } from "./utils/filterTasks";
 import "./App.css";
 import axios from "axios";
 import AddNewTask from "./new-components/AddNewTask";
@@ -129,7 +129,7 @@ function App() {
       />
       <br />
       <TasksList
-        listOfTasks={activeTasks(listOfTasks)}
+        listOfTasks={returnActiveTasks(listOfTasks)}
         updateTask={handleUpdateTask}
         deleteTask={handleDeleteTask}
         updateStatus={handleUpdateStatus}
@@ -144,7 +144,7 @@ function App() {
 
       {showArchived && (
         <TasksList
-          listOfTasks={archivedTasks(listOfTasks)}
+          listOfTasks={returnArchivedTasks(listOfTasks)}
           updateTask={handleUpdateTask}
           deleteTask={handleDeleteTask}
           updateStatus={handleUpdateStatus}
