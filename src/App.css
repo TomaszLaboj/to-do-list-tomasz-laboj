@@ -69,6 +69,10 @@ body {
   gap: 2px;
 }
 
+.notes-list-container-sortable {
+  background: lightblue;
+}
+
 .archived-button {
   border: none;
   background: none;

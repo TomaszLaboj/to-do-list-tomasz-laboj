@@ -8,6 +8,7 @@ import { Footer } from "./components/Footer";
 import Header from "./new-components/Header";
 import { url } from "./utils/utils";
 import TasksList from "./new-components/TasksList";
+import TasksListSortable from "./new-components/TasksListSortable";
 
 export type TitleAndDescription = {
   title: string;
@@ -128,6 +129,12 @@ function App() {
         handleAddTask={handleAddTask}
       />
       <br />
+      <TasksListSortable
+        listOfTasks={returnActiveTasks(listOfTasks)}
+        updateTask={handleUpdateTask}
+        deleteTask={handleDeleteTask}
+        updateStatus={handleUpdateStatus}
+      />
       <TasksList
         listOfTasks={returnActiveTasks(listOfTasks)}
         updateTask={handleUpdateTask}
