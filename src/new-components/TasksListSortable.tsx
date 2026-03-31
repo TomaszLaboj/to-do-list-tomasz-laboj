@@ -1,8 +1,22 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { OneTask } from "../components/oneTask";
 import Task from "./Task";
 import TaskEditor from "./TaskEditor";
 import isEqual from "lodash/isEqual";
+import {
+    DndContext,
+    closestCenter,
+    MouseSensor,
+    TouchSensor,
+    DragOverlay,
+    useSensor,
+    useSensors,
+    type DragStartEvent,
+    type DragEndEvent,
+    UniqueIdentifier,
+} from '@dnd-kit/core';
+import { arrayMove, SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
+import Grid from "./Grid";
 
 interface ListOfTasksProps {
   listOfTasks: OneTask[];
@@ -20,6 +34,7 @@ const TasksList = ({
   deleteTask,
   updateStatus,
 }: ListOfTasksProps) => {
+  const [tasksList, setTasksList] = useState<OneTask[]>([...listOfTasks]);
   const [highlightedTask, setHighlightedTask] = useState<OneTask | undefined>(
     undefined
   );
@@ -27,6 +42,32 @@ const TasksList = ({
     OneTask | undefined
   >(undefined);
   const [edited, setEdited] = useState(false);
+  const [activeId, setActiveId] = useState<string | number | null>(null);
+
+  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
+  
+  const handleDragStart = useCallback((event: DragStartEvent) => {
+      setActiveId(event.active.id);
+  }, []);
+      const handleDragEnd = useCallback((event: DragEndEvent) => {
+       const active = event.active;
+       const overId = event.over ? parseFloat(event.over.id.toString()) : null;
+      
+        if (active.id !== overId) {
+            setTasksList((items) => {
+                const oldIndex = items.findIndex((item) => item.id === parseFloat(active.id.toString()));
+                const newIndex = items.findIndex((item) => item.id === overId);
+                console.log("oldIndex: ", oldIndex, "newIndex: ", newIndex)
+                return arrayMove(items, oldIndex, newIndex);
+            });
+        }
+
+        setActiveId(null);
+    }, []);
+
+    const handleDragCancel = useCallback(() => {
+        setActiveId(null);
+    }, []);
 
   const handleHighlightTask = (task: OneTask) => {
     setHighlightedTask(task);
@@ -104,25 +145,44 @@ const TasksList = ({
 
   return (
     <>
+    <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            onDragCancel={handleDragCancel}
+        >
+          <SortableContext items={tasksList.map(task => task.id as UniqueIdentifier)} strategy={rectSortingStrategy}>
+            <Grid columns={5}>
+              {tasksList.map((task: OneTask) => {
+                return (
+                  <div key={task.id} onClick={() => handleHighlightTask(task)}>
+                    <Task
+                      id={task.id}
+                      title={task.title}
+                      description={task.description}
+                      dateAdded={new Date(task.date_added).toLocaleDateString()}
+                      dueDate={
+                        task.due_date && new Date(task.due_date).toLocaleDateString()
+                      }
+                      status={task.status}
+                      deleteTask={deleteTask}
+                      updateStatus={updateTaskStatus}
+                    />
+                  </div>
+                );
+              })}
+            </Grid>
+
+          </SortableContext>
+    </DndContext>
+
+
+
+
+
+
       <div className="notes-list-container-sortable">
-        {listOfTasks.map((task: OneTask) => {
-          return (
-            <div key={task.id} onClick={() => handleHighlightTask(task)}>
-              <Task
-                id={task.id}
-                title={task.title}
-                description={task.description}
-                dateAdded={new Date(task.date_added).toLocaleDateString()}
-                dueDate={
-                  task.due_date && new Date(task.due_date).toLocaleDateString()
-                }
-                status={task.status}
-                deleteTask={deleteTask}
-                updateStatus={updateTaskStatus}
-              />
-            </div>
-          );
-        })}
       </div>
       {highlightedTask && (
         <TaskEditor
