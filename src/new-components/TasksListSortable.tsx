@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { OneTask } from "../components/oneTask";
 import Task from "./Task";
 import TaskEditor from "./TaskEditor";
@@ -17,6 +17,7 @@ import {
 } from '@dnd-kit/core';
 import { arrayMove, SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import Grid from "./Grid";
+import SortableItemForGrid from "./SortableItemForGrid";
 
 interface ListOfTasksProps {
   listOfTasks: OneTask[];
@@ -28,13 +29,16 @@ interface ListOfTasksProps {
   ) => void;
 }
 
-const TasksList = ({
+const TasksListSortable = ({
   listOfTasks,
   updateTask,
   deleteTask,
   updateStatus,
 }: ListOfTasksProps) => {
   const [tasksList, setTasksList] = useState<OneTask[]>([...listOfTasks]);
+  useEffect(() => {
+    setTasksList([...listOfTasks]);
+  },[listOfTasks])
   const [highlightedTask, setHighlightedTask] = useState<OneTask | undefined>(
     undefined
   );
@@ -51,23 +55,22 @@ const TasksList = ({
   }, []);
       const handleDragEnd = useCallback((event: DragEndEvent) => {
        const active = event.active;
-       const overId = event.over ? parseFloat(event.over.id.toString()) : null;
+       const overId = event.over ? event.over.id : null;
       
         if (active.id !== overId) {
+          console.log("active id: ", active.id, "overId: ", overId)
             setTasksList((items) => {
-                const oldIndex = items.findIndex((item) => item.id === parseFloat(active.id.toString()));
+                const oldIndex = items.findIndex((item) => item.id === active.id);
                 const newIndex = items.findIndex((item) => item.id === overId);
-                console.log("oldIndex: ", oldIndex, "newIndex: ", newIndex)
                 return arrayMove(items, oldIndex, newIndex);
             });
         }
-
         setActiveId(null);
-    }, []);
+  }, []);
 
-    const handleDragCancel = useCallback(() => {
+  const handleDragCancel = useCallback(() => {
         setActiveId(null);
-    }, []);
+  }, []);
 
   const handleHighlightTask = (task: OneTask) => {
     setHighlightedTask(task);
@@ -156,20 +159,22 @@ const TasksList = ({
             <Grid columns={5}>
               {tasksList.map((task: OneTask) => {
                 return (
-                  <div key={task.id} onClick={() => handleHighlightTask(task)}>
-                    <Task
-                      id={task.id}
-                      title={task.title}
-                      description={task.description}
-                      dateAdded={new Date(task.date_added).toLocaleDateString()}
-                      dueDate={
-                        task.due_date && new Date(task.due_date).toLocaleDateString()
-                      }
-                      status={task.status}
-                      deleteTask={deleteTask}
-                      updateStatus={updateTaskStatus}
-                    />
-                  </div>
+                  <SortableItemForGrid
+                    title={task.title}
+                    description={task.description}
+                    dateAdded={new Date(task.date_added).toLocaleDateString()}
+                    dueDate={
+                    task.due_date && new Date(task.due_date).toLocaleDateString()
+                    }
+                    status={task.status}
+                    deleteTask={deleteTask}
+                    updateStatus={updateTaskStatus}
+                    key={task.id}
+                    id={task.id as number}                      
+                  />
+                  // <div key={task.id} onClick={() => handleHighlightTask(task)}>
+                    
+                  // </div>
                 );
               })}
             </Grid>
@@ -204,4 +209,4 @@ const TasksList = ({
   );
 };
 
-export default TasksList;
+export default TasksListSortable;

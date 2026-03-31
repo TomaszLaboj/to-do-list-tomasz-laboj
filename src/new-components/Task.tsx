@@ -25,13 +25,12 @@ const Task = ({
   updateStatus,
 }: TaskInterface) => {
   const statusInProgress = status === "In progress";
-
   return (
     <div className="task">
-      <h4 id="task-title" className="task-title">
+      <h4 className="task-title">
         {title}
       </h4>
-      <p id="task-description" className="task-description">
+      <p className="task-description">
         {description}
       </p>
       <span className="task-footer">

@@ -136,12 +136,12 @@ function App() {
         deleteTask={handleDeleteTask}
         updateStatus={handleUpdateStatus}
       />
-      <TasksList
+      {/* <TasksList
         listOfTasks={returnActiveTasks(listOfTasks)}
         updateTask={handleUpdateTask}
         deleteTask={handleDeleteTask}
         updateStatus={handleUpdateStatus}
-      />
+      /> */}
       <hr />
       <button
         className="archived-button"
