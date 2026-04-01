@@ -77,7 +77,6 @@ body {
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  /* align-items: start; */
   padding: 16px;
   max-width: 1600px;
   margin: 100px auto;
@@ -140,17 +139,7 @@ body {
   position: relative;
   max-height: fit-content;
 }
-/* .task-description::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 10px;
 
-  background: linear-gradient(to bottom, transparent, white);
-  pointer-events: none;
-} */
 .task-footer {
   margin-top: auto;
   display: flex;
