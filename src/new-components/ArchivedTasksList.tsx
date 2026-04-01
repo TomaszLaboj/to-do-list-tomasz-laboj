@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { OneTask } from "../components/oneTask";
 import TaskEditor from "./TaskEditor";
-import isEqual from "lodash/isEqual";
 import {
     DndContext,
     closestCenter,
@@ -17,10 +16,10 @@ import {
 import { arrayMove, SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import Grid from "./Grid";
 import SortableItemForGrid from "./SortableItemForGrid";
+import ArchivedTaskPreview from "./ArchivedTaskPreview";
 
 interface ListOfTasksProps {
   listOfTasks: OneTask[];
-  updateTask: (task: OneTask) => void;
   deleteTask: (taskId: number | undefined) => void;
   updateStatus: (
     taskId: number | undefined,
@@ -28,9 +27,8 @@ interface ListOfTasksProps {
   ) => void;
 }
 
-const TasksListSortable = ({
+const ArchivedTasksList = ({
   listOfTasks,
-  updateTask,
   deleteTask,
   updateStatus,
 }: ListOfTasksProps) => {
@@ -60,27 +58,26 @@ const TasksListSortable = ({
   const handleDragStart = useCallback((event: DragStartEvent) => {
       setActiveId(event.active.id);
   }, []);
-      const handleDragEnd = useCallback((event: DragEndEvent) => {
-       const active = event.active;
-       const overId = event.over ? event.over.id : null;
-      
-        if (active.id !== overId) {
-          console.log("active id: ", active.id, "overId: ", overId)
-            setTasksList((items) => {
-                const oldIndex = items.findIndex((item) => item.id === active.id);
-                const newIndex = items.findIndex((item) => item.id === overId);
-                return arrayMove(items, oldIndex, newIndex);
-            });
-        }
-        setActiveId(null);
+    const handleDragEnd = useCallback((event: DragEndEvent) => {
+    const active = event.active;
+    const overId = event.over ? event.over.id : null;
+    
+    if (active.id !== overId) {
+        console.log("active id: ", active.id, "overId: ", overId)
+        setTasksList((items) => {
+            const oldIndex = items.findIndex((item) => item.id === active.id);
+            const newIndex = items.findIndex((item) => item.id === overId);
+            return arrayMove(items, oldIndex, newIndex);
+        });
+    }
+    setActiveId(null);
   }, []);
 
   const handleDragCancel = useCallback(() => {
-        setActiveId(null);
+    setActiveId(null);
   }, []);
 
   const handleHighlightTask = (task: OneTask) => {
-    console.log('handle highlight task: ', task)
     setHighlightedTask(task);
     setHighlightedTaskOriginal({ ...task });
   };
@@ -125,7 +122,6 @@ const TasksListSortable = ({
     taskId: number | undefined,
     status: "In progress" | "Done"
   ) => {
-    console.log(taskId);
     updateStatus(taskId, status);
     if (highlightedTask) {
       setHighlightedTask(undefined);
@@ -141,18 +137,10 @@ const TasksListSortable = ({
     if (edited) setEdited(false);
   };
 
-  const handleCloseAndUpdate = () => {
-    if (
-      highlightedTask &&
-      edited &&
-      !isEqual(highlightedTask, highlightedTaskOriginal)
-    ) {
-      updateTask(highlightedTask);
+    const closeTaskPreview = () => {
+        setHighlightedTask(undefined);
+        setHighlightedTaskOriginal(undefined);
     }
-    setEdited(false);
-    setHighlightedTask(undefined);
-    setHighlightedTaskOriginal(undefined);
-  };
 
   return (
     <>
@@ -172,9 +160,7 @@ const TasksListSortable = ({
                     title={task.title}
                     description={task.description}
                     dateAdded={new Date(task.date_added).toLocaleDateString()}
-                    dueDate={
-                    task.due_date && new Date(task.due_date).toLocaleDateString()
-                    }
+                    dueDate={task.due_date && new Date(task.due_date).toLocaleDateString()}
                     status={task.status}
                     deleteTask={deleteTask}
                     updateStatus={updateTaskStatus}
@@ -191,23 +177,20 @@ const TasksListSortable = ({
       <div className="notes-list-container-sortable">
       </div>
       {highlightedTask && (
-        <TaskEditor
+        <ArchivedTaskPreview
           id={highlightedTask.id}
           title={highlightedTask?.title}
           description={highlightedTask?.description}
           dateAdded={highlightedTask?.date_added}
           dueDate={highlightedTask?.due_date}
           status={highlightedTask?.status}
-          updateTitle={handleUpdateTitle}
-          updateDescription={handleUpdateDescription}
           updateStatus={updateTaskStatus}
-          updateDueDate={handleUpdateDueDate}
-          closeAndUpdate={handleCloseAndUpdate}
           deleteTask={handleDeleteTask}
+          closePreview={closeTaskPreview}
         />
       )}
     </>
   );
 };
 
-export default TasksListSortable;
+export default ArchivedTasksList;

@@ -22,7 +22,7 @@ const AddNewTask = ({
   const [expanded, setExpanded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
-
+  
   useEffect(() => {
     if (expanded) {
       descriptionRef.current?.focus();
@@ -78,7 +78,6 @@ const AddNewTask = ({
         <>
           <textarea
             value={title}
-            id="title-input"
             className="title-input"
             placeholder="Title"
             rows={1}
@@ -88,7 +87,6 @@ const AddNewTask = ({
           <textarea
             value={description}
             ref={descriptionRef}
-            id="description-input"
             className={"description-input"}
             placeholder="Take a note..."
             rows={1}

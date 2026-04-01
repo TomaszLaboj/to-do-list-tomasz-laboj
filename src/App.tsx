@@ -7,7 +7,7 @@ import AddNewTask from "./new-components/AddNewTask";
 import { Footer } from "./components/Footer";
 import Header from "./new-components/Header";
 import { url } from "./utils/utils";
-import TasksList from "./new-components/TasksList";
+import ArchivedTasksList from "./new-components/ArchivedTasksList";
 import TasksListSortable from "./new-components/TasksListSortable";
 
 export type TitleAndDescription = {
@@ -136,12 +136,6 @@ function App() {
         deleteTask={handleDeleteTask}
         updateStatus={handleUpdateStatus}
       />
-      {/* <TasksList
-        listOfTasks={returnActiveTasks(listOfTasks)}
-        updateTask={handleUpdateTask}
-        deleteTask={handleDeleteTask}
-        updateStatus={handleUpdateStatus}
-      /> */}
       <hr />
       <button
         className="archived-button"
@@ -151,9 +145,8 @@ function App() {
       </button>
 
       {showArchived && (
-        <TasksList
+        <ArchivedTasksList
           listOfTasks={returnArchivedTasks(listOfTasks)}
-          updateTask={handleUpdateTask}
           deleteTask={handleDeleteTask}
           updateStatus={handleUpdateStatus}
         />
