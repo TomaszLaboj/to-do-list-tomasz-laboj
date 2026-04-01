@@ -29,7 +29,6 @@ export function AddNewTaskOld({
           value={addDescription}
           className="inputbox"
           type="text"
-          id="description"
           name="description"
           onChange={(event) => {
             setAddDescription(event.target.value);
