@@ -14,6 +14,7 @@ import {
     type DragStartEvent,
     type DragEndEvent,
     UniqueIdentifier,
+    PointerSensor,
 } from '@dnd-kit/core';
 import { arrayMove, SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import Grid from "./Grid";
@@ -48,7 +49,11 @@ const TasksListSortable = ({
   const [edited, setEdited] = useState(false);
   const [activeId, setActiveId] = useState<string | number | null>(null);
 
-  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
+  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor), useSensor(PointerSensor, {
+    activationConstraint: {
+        distance: 5,
+    },
+  }));
   
   const handleDragStart = useCallback((event: DragStartEvent) => {
       setActiveId(event.active.id);
@@ -73,6 +78,7 @@ const TasksListSortable = ({
   }, []);
 
   const handleHighlightTask = (task: OneTask) => {
+    console.log('handle highlight task: ', task)
     setHighlightedTask(task);
     setHighlightedTaskOriginal({ ...task });
   };
@@ -159,6 +165,7 @@ const TasksListSortable = ({
             <Grid columns={5}>
               {tasksList.map((task: OneTask) => {
                 return (
+                  <div key={task.id} onClick={() => handleHighlightTask(task)}>
                   <SortableItemForGrid
                     title={task.title}
                     description={task.description}
@@ -172,9 +179,8 @@ const TasksListSortable = ({
                     key={task.id}
                     id={task.id as number}                      
                   />
-                  // <div key={task.id} onClick={() => handleHighlightTask(task)}>
                     
-                  // </div>
+                 </div>
                 );
               })}
             </Grid>

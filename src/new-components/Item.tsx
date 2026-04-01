@@ -34,6 +34,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({
     console.log(isDragging);
     const inlineStyles: CSSProperties = {
         opacity: withOpacity ? '0.5' : '1',
+        height: '100%',
         transformOrigin: '50% 50%',
         display: 'flex',
   flexDirection: 'column',
