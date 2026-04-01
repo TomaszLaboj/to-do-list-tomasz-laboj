@@ -3,18 +3,22 @@ import { OneTask } from "../components/oneTask";
 import TaskEditor from "./TaskEditor";
 import isEqual from "lodash/isEqual";
 import {
-    DndContext,
-    closestCenter,
-    MouseSensor,
-    TouchSensor,
-    useSensor,
-    useSensors,
-    type DragStartEvent,
-    type DragEndEvent,
-    UniqueIdentifier,
-    PointerSensor,
-} from '@dnd-kit/core';
-import { arrayMove, SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
+  DndContext,
+  closestCenter,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+  type DragStartEvent,
+  type DragEndEvent,
+  UniqueIdentifier,
+  PointerSensor,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
 import Grid from "./Grid";
 import SortableItemForGrid from "./SortableItemForGrid";
 
@@ -38,7 +42,7 @@ const TasksListSortable = ({
 
   useEffect(() => {
     setTasksList([...listOfTasks]);
-  },[listOfTasks])
+  }, [listOfTasks]);
 
   const [highlightedTask, setHighlightedTask] = useState<OneTask | undefined>(
     undefined
@@ -51,36 +55,40 @@ const TasksListSortable = ({
   const [edited, setEdited] = useState(false);
   const [activeId, setActiveId] = useState<string | number | null>(null);
 
-  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor), useSensor(PointerSensor, {
-    activationConstraint: {
+  const sensors = useSensors(
+    useSensor(MouseSensor),
+    useSensor(TouchSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: {
         distance: 5,
-    },
-  }));
-  
+      },
+    })
+  );
+
   const handleDragStart = useCallback((event: DragStartEvent) => {
-      setActiveId(event.active.id);
+    setActiveId(event.active.id);
   }, []);
-      const handleDragEnd = useCallback((event: DragEndEvent) => {
-       const active = event.active;
-       const overId = event.over ? event.over.id : null;
-      
-        if (active.id !== overId) {
-          console.log("active id: ", active.id, "overId: ", overId)
-            setTasksList((items) => {
-                const oldIndex = items.findIndex((item) => item.id === active.id);
-                const newIndex = items.findIndex((item) => item.id === overId);
-                return arrayMove(items, oldIndex, newIndex);
-            });
-        }
-        setActiveId(null);
+  const handleDragEnd = useCallback((event: DragEndEvent) => {
+    const active = event.active;
+    const overId = event.over ? event.over.id : null;
+
+    if (active.id !== overId) {
+      console.log("active id: ", active.id, "overId: ", overId);
+      setTasksList((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === overId);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
+    setActiveId(null);
   }, []);
 
   const handleDragCancel = useCallback(() => {
-        setActiveId(null);
+    setActiveId(null);
   }, []);
 
   const handleHighlightTask = (task: OneTask) => {
-    console.log('handle highlight task: ', task)
+    console.log("handle highlight task: ", task);
     setHighlightedTask(task);
     setHighlightedTaskOriginal({ ...task });
   };
@@ -163,7 +171,10 @@ const TasksListSortable = ({
         onDragEnd={handleDragEnd}
         onDragCancel={handleDragCancel}
       >
-        <SortableContext items={tasksList.map(task => task.id as UniqueIdentifier)} strategy={rectSortingStrategy}>
+        <SortableContext
+          items={tasksList.map((task) => task.id as UniqueIdentifier)}
+          strategy={rectSortingStrategy}
+        >
           <Grid columns={5}>
             {tasksList.map((task: OneTask) => {
               return (
@@ -173,14 +184,15 @@ const TasksListSortable = ({
                     description={task.description}
                     dateAdded={new Date(task.date_added).toLocaleDateString()}
                     dueDate={
-                    task.due_date && new Date(task.due_date).toLocaleDateString()
+                      task.due_date &&
+                      new Date(task.due_date).toLocaleDateString()
                     }
                     status={task.status}
                     deleteTask={deleteTask}
                     updateStatus={updateTaskStatus}
                     key={task.id}
-                    id={task.id as number}                      
-                  />   
+                    id={task.id as number}
+                  />
                 </div>
               );
             })}
@@ -188,8 +200,7 @@ const TasksListSortable = ({
         </SortableContext>
       </DndContext>
 
-      <div className="notes-list-container-sortable">
-      </div>
+      <div className="notes-list-container-sortable"></div>
       {highlightedTask && (
         <TaskEditor
           id={highlightedTask.id}

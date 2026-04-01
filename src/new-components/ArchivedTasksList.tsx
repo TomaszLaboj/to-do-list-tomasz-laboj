@@ -1,19 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
 import { OneTask } from "../components/oneTask";
-import TaskEditor from "./TaskEditor";
 import {
-    DndContext,
-    closestCenter,
-    MouseSensor,
-    TouchSensor,
-    useSensor,
-    useSensors,
-    type DragStartEvent,
-    type DragEndEvent,
-    UniqueIdentifier,
-    PointerSensor,
-} from '@dnd-kit/core';
-import { arrayMove, SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
+  DndContext,
+  closestCenter,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+  type DragStartEvent,
+  type DragEndEvent,
+  UniqueIdentifier,
+  PointerSensor,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
 import Grid from "./Grid";
 import SortableItemForGrid from "./SortableItemForGrid";
 import ArchivedTaskPreview from "./ArchivedTaskPreview";
@@ -36,39 +39,40 @@ const ArchivedTasksList = ({
 
   useEffect(() => {
     setTasksList([...listOfTasks]);
-  },[listOfTasks])
+  }, [listOfTasks]);
 
   const [highlightedTask, setHighlightedTask] = useState<OneTask | undefined>(
     undefined
   );
 
-  const [highlightedTaskOriginal, setHighlightedTaskOriginal] = useState<
-    OneTask | undefined
-  >(undefined);
-
   const [edited, setEdited] = useState(false);
   const [activeId, setActiveId] = useState<string | number | null>(null);
 
-  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor), useSensor(PointerSensor, {
-    activationConstraint: {
+  const sensors = useSensors(
+    useSensor(MouseSensor),
+    useSensor(TouchSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: {
         distance: 5,
-    },
-  }));
-  
+      },
+    })
+  );
+
   const handleDragStart = useCallback((event: DragStartEvent) => {
-      setActiveId(event.active.id);
+    setActiveId(event.active.id);
   }, []);
-    const handleDragEnd = useCallback((event: DragEndEvent) => {
+
+  const handleDragEnd = useCallback((event: DragEndEvent) => {
     const active = event.active;
     const overId = event.over ? event.over.id : null;
-    
+
     if (active.id !== overId) {
-        console.log("active id: ", active.id, "overId: ", overId)
-        setTasksList((items) => {
-            const oldIndex = items.findIndex((item) => item.id === active.id);
-            const newIndex = items.findIndex((item) => item.id === overId);
-            return arrayMove(items, oldIndex, newIndex);
-        });
+      console.log("active id: ", active.id, "overId: ", overId);
+      setTasksList((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === overId);
+        return arrayMove(items, oldIndex, newIndex);
+      });
     }
     setActiveId(null);
   }, []);
@@ -79,7 +83,6 @@ const ArchivedTasksList = ({
 
   const handleHighlightTask = (task: OneTask) => {
     setHighlightedTask(task);
-    setHighlightedTaskOriginal({ ...task });
   };
 
   const handleUpdateTitle = (value: string) => {
@@ -125,7 +128,6 @@ const ArchivedTasksList = ({
     updateStatus(taskId, status);
     if (highlightedTask) {
       setHighlightedTask(undefined);
-      setHighlightedTaskOriginal(undefined);
     }
     if (edited) setEdited(false);
   };
@@ -133,14 +135,12 @@ const ArchivedTasksList = ({
   const handleDeleteTask = (taskId: number | undefined) => {
     deleteTask(taskId);
     setHighlightedTask(undefined);
-    setHighlightedTaskOriginal(undefined);
     if (edited) setEdited(false);
   };
 
-    const closeTaskPreview = () => {
-        setHighlightedTask(undefined);
-        setHighlightedTaskOriginal(undefined);
-    }
+  const closeTaskPreview = () => {
+    setHighlightedTask(undefined);
+  };
 
   return (
     <>
@@ -151,7 +151,10 @@ const ArchivedTasksList = ({
         onDragEnd={handleDragEnd}
         onDragCancel={handleDragCancel}
       >
-        <SortableContext items={tasksList.map(task => task.id as UniqueIdentifier)} strategy={rectSortingStrategy}>
+        <SortableContext
+          items={tasksList.map((task) => task.id as UniqueIdentifier)}
+          strategy={rectSortingStrategy}
+        >
           <Grid columns={5}>
             {tasksList.map((task: OneTask) => {
               return (
@@ -160,13 +163,16 @@ const ArchivedTasksList = ({
                     title={task.title}
                     description={task.description}
                     dateAdded={new Date(task.date_added).toLocaleDateString()}
-                    dueDate={task.due_date && new Date(task.due_date).toLocaleDateString()}
+                    dueDate={
+                      task.due_date &&
+                      new Date(task.due_date).toLocaleDateString()
+                    }
                     status={task.status}
                     deleteTask={deleteTask}
                     updateStatus={updateTaskStatus}
                     key={task.id}
-                    id={task.id as number}                      
-                  />   
+                    id={task.id as number}
+                  />
                 </div>
               );
             })}
@@ -174,8 +180,7 @@ const ArchivedTasksList = ({
         </SortableContext>
       </DndContext>
 
-      <div className="notes-list-container-sortable">
-      </div>
+      <div className="notes-list-container-sortable"></div>
       {highlightedTask && (
         <ArchivedTaskPreview
           id={highlightedTask.id}

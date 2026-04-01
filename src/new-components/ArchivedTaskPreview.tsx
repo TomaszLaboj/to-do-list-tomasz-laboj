@@ -16,7 +16,7 @@ interface TaskEditorInterface {
   closePreview: () => void;
 }
 
-const TaskEditor = ({
+const ArchivedTaskPreview = ({
   id,
   title,
   description,
@@ -25,18 +25,12 @@ const TaskEditor = ({
   status,
   updateStatus,
   deleteTask,
-  closePreview
+  closePreview,
 }: TaskEditorInterface) => {
   const taskEditorRef = useRef<HTMLDivElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const statusInProgress = status === "In progress";
-
-  const autoResize = (e: SyntheticEvent<HTMLTextAreaElement>) => {
-    const el = e.currentTarget;
-    el.style.height = "0px";
-    el.style.height = el.scrollHeight + "px";
-  };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -74,15 +68,15 @@ const TaskEditor = ({
     <div className="background">
       <div ref={taskEditorRef} className="task-editor">
         <span>
-            <p className="task-editor-title">{title}</p>
-          
+          <p className="task-editor-title">{title}</p>
+
           <div className="task-editor-date-added">
             Date added: {new Date(dateAdded).toLocaleDateString()}
           </div>
         </span>
         <p className="task-editor-description">{description}</p>
         <span>
-            <p>{dueDate ? dueDate?.split("T")[0] : ""}</p>
+          <p>{dueDate ? dueDate?.split("T")[0] : ""}</p>
           <span className="task-editor-footer-bin-and-close-buttons">
             <div className="archive-button-tooltip">
               <button
@@ -117,4 +111,4 @@ const TaskEditor = ({
   );
 };
 
-export default TaskEditor;
+export default ArchivedTaskPreview;

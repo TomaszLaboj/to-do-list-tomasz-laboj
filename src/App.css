@@ -135,10 +135,10 @@ body {
 
 .task-description {
   word-wrap: break-word;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  text-overflow: ellipsis;
   position: relative;
-  max-height: fit-content
+  max-height: fit-content;
 }
 /* .task-description::after {
   content: "";
@@ -152,7 +152,7 @@ body {
   pointer-events: none;
 } */
 .task-footer {
-  margin-top: auto; 
+  margin-top: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;

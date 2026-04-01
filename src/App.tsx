@@ -77,7 +77,7 @@ function App() {
         .then(() => getTasksList());
     }
   };
-  
+
   const handleDateChange = (date: string) => {
     setDueDate(date);
   };

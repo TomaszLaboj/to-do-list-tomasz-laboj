@@ -46,7 +46,10 @@ const TaskEditor = ({
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (!taskEditorRef.current?.contains(e.target as Node) && closeAndUpdate) {
+      if (
+        !taskEditorRef.current?.contains(e.target as Node) &&
+        closeAndUpdate
+      ) {
         closeAndUpdate();
       }
     };

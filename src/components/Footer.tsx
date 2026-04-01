@@ -3,7 +3,7 @@ export function Footer() {
   return (
     <>
       <p className={"footer"}>
-        Copyright 2023 - 2026 Tomasz Laboj
+        2023 - 2026 Tomasz Laboj
         <br /> GitHub repos:{" "}
         <a href="https://github.com/TomaszLaboj/to-do-list-tomasz-laboj">
           front end

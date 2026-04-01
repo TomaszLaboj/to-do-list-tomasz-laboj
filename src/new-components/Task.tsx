@@ -27,12 +27,8 @@ const Task = ({
   const statusInProgress = status === "In progress";
   return (
     <div className="task">
-      <h4 className="task-title">
-        {title}
-      </h4>
-      <p className="task-description">
-        {description}
-      </p>
+      <h4 className="task-title">{title}</h4>
+      <p className="task-description">{description}</p>
       <span className="task-footer">
         <div className="task-footer-date">
           {dueDate && "Due date: " + dueDate}
